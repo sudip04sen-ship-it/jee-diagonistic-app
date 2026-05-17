@@ -1,0 +1,111 @@
+/* GLOBAL THEME ENGINE */
+body {
+    background-color: #0b0b14;
+    color: #e2e8f0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 30px;
+}
+
+/* HIGH-TECH CONTAINER CARDS */
+.widget-box {
+    background: linear-gradient(145deg, #131324, #1b1b32) !important;
+    border: 1px solid #2e2e4e !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    padding: 24px !important;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.widget-box:hover {
+    border-color: #4d4d80 !important;
+    box-shadow: 0 12px 32px rgba(114, 137, 218, 0.1);
+}
+
+/* NEON ACTION BUTTONS */
+button {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* XP PROGRESS BAR ANIMATION */
+#xp-bar {
+    background: linear-gradient(90deg, #10ac84, #1dd1a1) !important;
+    box-shadow: 0 0 10px rgba(29, 209, 161, 0.5);
+}
+/* HORIZONTAL SLIDER CORE MECHANICS */
+.menu-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.horizontal-drawer {
+    display: flex;
+    align-items: center;
+    background: #131324;
+    border: 1px solid #2e2e4e;
+    border-radius: 20px;
+    padding: 0 15px;
+    height: 45px;
+    gap: 20px;
+    
+    /* Lock dimensions perfectly with no extra blank margins */
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    position: absolute;
+    right: 40px; 
+}
+
+/* HOVER EXPANSION TRIGGER */
+.menu-wrapper:hover .horizontal-drawer {
+    width: 480px; /* Expands exactly wide enough to snugly fit the text */
+    opacity: 1;
+}
+
+/* TEXT INTERACTIVE GLOWS */
+.drawer-item {
+    font-size: 13px;
+    font-weight: 600;
+    color: #a4b0be;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease-in-out;
+}
+
+.drawer-item:hover {
+    color: #00d2d3;
+    text-shadow: 0 0 8px rgba(0, 210, 211, 0.6);
+    transform: scale(1.05);
+}
+
+/* LIGHT MODE SUPPORT VARIABLE OVERRIDES */
+body.light-theme {
+    background-color: #f1f2f6 !important;
+    color: #2f3542 !important;
+}
+body.light-theme .widget-box {
+    background: #ffffff !important;
+    border: 1px solid #ced6e0 !important;
+    color: #2f3542 !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+body.light-theme .horizontal-drawer {
+    background: #ffffff;
+    border-color: #ced6e0;
+}
+body.light-theme .drawer-item {
+    color: #57606f;
+}

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aspirant Dossier Matrix | Profile Hub</title>
+    <style>
+        body {
+            background-color: #0b0b14;
+            color: #e2e8f0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .profile-container {
+            background: linear-gradient(145deg, #131324, #1b1b32);
+            border: 1px solid #2e2e4e;
+            border-radius: 12px;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #2e2e4e;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #a4b0be;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-size: 15px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .badge-premium {
+            background: linear-gradient(135deg, #ffd700, #ff9f43);
+            color: #0b0b14;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .badge-normal {
+            background: #576574;
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .return-btn {
+            background: #4d00ff;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        .return-btn:hover {
+            background: #00d2d3;
+            box-shadow: 0 0 15px rgba(0, 210, 211, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-container">
+        <!-- HEADER PORTRAIT TITLE BLOCK -->
+        <div style="text-align: center; margin-bottom: 25px;">
+            <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #4d00ff, #00d2d3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px auto; font-size: 28px; box-shadow: 0 0 15px rgba(0, 210, 211, 0.3);">
+                🎓
+            </div>
+            <h2 id="profile-user-name" style="margin: 0; font-size: 20px; color: #fff;">Aspirant Profile</h2>
+            <div id="profile-tier-title" style="font-size: 12px; color: #ffd700; font-weight: bold; margin-top: 5px; letter-spacing: 1px;">POTATO COUCH</div>
+        </div>
+
+        <!-- DIAGNOSTIC STATS BLOCK CONTAINER -->
+        <div style="background: #0b0b14; border-radius: 8px; padding: 10px 20px; border: 1px solid #2e2e4e;">
+            
+            <div class="stat-row">
+                <span class="stat-label">Account Track Status</span>
+                <span id="stat-account-track" class="badge-normal">NORMAL TRACK</span>
+            </div>
+
+            <div class="stat-row">
+                <span class="stat-label">Total Earned Capital</span>
+                <span id="stat-total-xp" class="stat-value">0 XP</span>
+            </div>
+
+            <div class="stat-row">
+                <span class="stat-label">National Leaderboard Position</span>
+                <span id="stat-global-rank" class="stat-value" style="color: #00d2d3;">Rank #--</span>
+            </div>
+
+            <div class="stat-row">
+                <span class="stat-label">Evaluated Questions Solved</span>
+                <span id="stat-solved-count" class="stat-value">0 / Unlimited</span>
+            </div>
+
+            <div class="stat-row">
+                <span class="stat-label">Active Flashcards Generated</span>
+                <span id="stat-flashcards-count" class="stat-value">0 Created</span>
+            </div>
+
+        </div>
+
+        <!-- RETURN PATH ROUTING ENTRY -->
+        <a href="index.html" class="return-btn">⚡ Sync & Return to Training Deck</a>
+    </div>
+
+    <!-- PERSISTENCE DATA PARSING LOGIC BRIDGE -->
+    <script>
+        window.addEventListener("DOMContentLoaded", function() {
+            // Pull data logs dynamically from browser persistence layer
+            let activeName = localStorage.getItem("currentUserName") || "Aspirant Player";
+            let activeXP = parseInt(localStorage.getItem("totalUserXP") || "0", 10);
+            let activeRank = localStorage.getItem("currentUserGlobalRank") || "--";
+            
+            // Simulating variables placeholder since features scale up sequentially
+            let mockQuestionsSolved = activeXP > 0 ? Math.floor(activeXP / 100) : 0;
+            let mockFlashcards = activeXP > 0 ? Math.floor(activeXP / 300) : 0;
+
+            // Compute dynamic tier categorization title
+            let finalTier = "🥔 POTATO COUCH";
+            if (activeXP >= 10000 && activeXP < 20000) finalTier = "🪖 DESK WARRIOR";
+            else if (activeXP >= 20000 && activeXP < 60000) finalTier = "⚡ DESK WARRIOR 2";
+            else if (activeXP >= 60000 && activeXP <= 90000) finalTier = "👑 IITIAN";
+            else if (activeXP > 90000) finalTier = "🚀 LEGENDARY ASPIRANT";
+
+            // Map variables safely straight into domestic page DOM structures
+            document.getElementById("profile-user-name").innerText = activeName;
+            document.getElementById("profile-tier-title").innerText = finalTier;
+            document.getElementById("stat-total-xp").innerText = activeXP + " XP";
+            document.getElementById("stat-global-rank").innerText = "Rank #" + activeRank;
+            document.getElementById("stat-solved-count").innerText = mockQuestionsSolved + " Problems Evaluated";
+            document.getElementById("stat-flashcards-count").innerText = mockFlashcards + " Generated Decks";
+
+            // Evaluate if premium authorization sequence is unlocked or not
+            let isPremiumActive = localStorage.getItem("premiumAuthorizedState") === "true"; 
+            let trackBadge = document.getElementById("stat-account-track");
+            
+            if (isPremiumActive) {
+                trackBadge.innerText = "👑 PREMIUM ACCESS UNLOCKED";
+                trackBadge.className = "badge-premium";
+            } else {
+                trackBadge.innerText = "NORMAL ACCESS";
+                trackBadge.className = "badge-normal";
+            }
+        });
+    </script>
+</body>
+</html>

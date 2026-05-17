@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEE Diagnostic Configuration Terminal</title>
+    <style>
+        body {
+            background-color: #0b0b14;
+            color: #e2e8f0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 30px;
+            margin: 0;
+        }
+        .config-container {
+            background: linear-gradient(145deg, #131324, #1b1b32);
+            border: 1px solid #2e2e4e;
+            border-radius: 12px;
+            max-width: 650px;
+            margin: 0 auto; 
+            padding: 25px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+        h2 { margin-top: 0; color: #00d2d3; border-bottom: 1px solid #2e2e4e; padding-bottom: 10px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 14px; color: #a4b0be; }
+        select, input[type="number"] {
+            width: 100%; background: #0b0b14; border: 1px solid #444; color: white; 
+            padding: 10px; border-radius: 6px; font-size: 14px; box-sizing: border-box;
+        }
+        .btn-launch {
+            background: linear-gradient(135deg, #00d2d3, #4d00ff); color: white; border: none;
+            padding: 12px 24px; border-radius: 6px; font-size: 16px; font-weight: bold; 
+            cursor: pointer; width: 100%; transition: opacity 0.2s;
+        }
+        .btn-launch:hover { opacity: 0.9; }
+        .quiz-engine-view { display: none; background: #131324; padding: 20px; border-radius: 8px; border: 1px solid #2e2e4e; }
+        .question-card { background: #0b0b14; padding: 15px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #4d00ff; }
+        .timer-banner { font-size: 18px; font-weight: bold; color: #ff4757; text-align: right; margin-bottom: 15px; font-family: monospace; }
+        
+        .quiz-text-input {
+            width: 100%; background: #131324; border: 1px solid #444; color: #fff;
+            padding: 10px; border-radius: 4px; font-size: 14px; margin-top: 10px; box-sizing: border-box;
+        }
+        /* Styling for disabled fields to clearly show they are locked */
+        .quiz-text-input:disabled {
+            background: #1b1b32;
+            color: #747d8c;
+            border-color: #2e2e4e;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<div class="config-container">
+    <div id="setup-panel">
+        <h2 id="subject-title">JEE Target Configuration Panel</h2>
+        
+        <div class="form-group">
+            <label for="chapter-select">Select Target Chapter:</label>
+            <select id="chapter-select"></select>
+        </div>
+
+        <div class="form-group">
+            <label for="difficulty-select">Select Parameter Difficulty:</label>
+            <select id="difficulty-select">
+                <option value="easy">Easy (Conceptual Recall)</option>
+                <option value="medium">Medium (Application Matrix)</option>
+                <option value="tough">Tough (Advanced Multi-Concept)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="count-input">Number of Questions (Max 10):</label>
+            <input type="number" id="count-input" value="5" min="1" max="10">
+        </div>
+
+        <div class="form-group">
+            <label for="time-select">Session Allocation Time:</label>
+            <select id="time-select">
+                <option value="5">5 Minutes</option>
+                <option value="10">10 Minutes</option>
+                <option value="20">20 Minutes</option>
+                <option value="30">30 Minutes</option>
+            </select>
+        </div>
+
+        <button class="btn-launch" onclick="generateCustomQuizSession()">Initialize Core Blueprint ⚡</button>
+    </div>
+
+    <!-- LIVE QUIZ LAYOUT TERMINAL -->
+    <div id="quiz-terminal" class="quiz-engine-view">
+        <div class="timer-banner" id="quiz-clock">Time Remaining: --:--</div>
+        <div id="questions-go-here"></div>
+        
+        <!-- Interactive actions zone -->
+        <div id="quiz-action-zone">
+            <button id="submit-btn" class="btn-launch" style="background:#2ed573;" onclick="submitQuizSession()">Finalize & Submit Sheet</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const QUESTION_BANK = {
+    math: {
+        calculus: {
+            easy: [
+                { q: "Find the derivative of x³ with respect to x.", a: "3x²" },
+                { q: "What is the derivative of sin(x)?", a: "cos(x)" },
+                { q: "Evaluate the indefinite integral: ∫ 2x dx.", a: "x² + C" },
+                { q: "What is the derivative of e^x?", a: "e^x" },
+                { q: "Find the derivative of ln(x).", a: "1/x" }
+            ],
+            medium: [
+                { q: "Find the total area enclosed between the curves y = x² and y = x.", a: "1/6" },
+                { q: "Find the derivative of ln(x²) at x = 1.", a: "2" },
+                { q: "Evaluate the limit as x approaches 0 of sin(5x)/x.", a: "5" },
+                { q: "Find the slope of the tangent to the curve y = x² - 4x at the point (3, -3).", a: "2" }
+            ],
+            tough: [
+                { q: "Evaluate the definite integral from 0 to pi of x*sin(x)/(1+cos²(x)).", a: "pi² / 4" },
+                { q: "Find the number of points of non-differentiability for f(x) = |x| + |x-1|.", a: "2" },
+                { q: "Let f(x) = x³ + 3x² + 4x + 5. If g(x) is the inverse of f(x), find the value of g'(5).", a: "1/4" }
+            ]
+        },
+        coordinateGeometry: {
+            easy: [
+                { q: "What is the slope of a line parallel to y = 3x + 5?", a: "3" },
+                { q: "Find the distance between the origin (0,0) and the point (3,4).", a: "5" },
+                { q: "Find the midpoint of the line segment joining (2,4) and (6,8).", a: "(4,6)" },
+                { q: "What is the radius of the circle x² + y² = 49?", a: "7" }
+            ],
+            medium: [
+                { q: "Determine the eccentricity of the ellipse x²/16 + y²/9 = 1.", a: "sqrt(7)/4" },
+                { q: "Find the equation of the tangent to the circle x² + y² = 25 at the point (3,4).", a: "3x + 4y = 25" },
+                { q: "Find the focus of the parabola y² = 12x.", a: "(3,0)" }
+            ],
+            tough: [
+                { q: "Find the condition for the line y = mx + c to be a tangent to the hyperbola x²/a² - y²/b² = 1.", a: "c² = a²m² - b²" },
+                { q: "Find the locus of the point of intersection of perpendicular tangents to the parabola y² = 4ax.", a: "x = -a" }
+            ]
+        },
+        algebra: {
+            easy: [
+                { q: "Find the value of log base 2 of 8.", a: "3" },
+                { q: "Find the sum of the roots of the quadratic equation x² - 5x + 6 = 0.", a: "5" },
+                { q: "Find the product of the roots of the quadratic equation x² - 7x + 12 = 0.", a: "12" },
+                { q: "Find the value of 5! (factorial of 5).", a: "120" }
+            ],
+            medium: [
+                { q: "If alpha and beta are roots of x² - 5x + 6 = 0, evaluate alpha² + beta².", a: "13" },
+                { q: "Find the sum of the coefficients in the expansion of (1 - 3x + x²)^111.", a: "-1" },
+                { q: "Find the 5th term of an Arithmetic Progression (AP) whose first term is 3 and common difference is 4.", a: "19" }
+            ],
+            tough: [
+                { q: "If the roots of the equation x³ - 3x² + kx + 14 = 0 are in Arithmetic Progression, find the real value of k.", a: "-6" },
+                { q: "Find the number of real roots of the equation e^(sin x) - e^(-sin x) - 4 = 0.", a: "0" }
+            ]
+        },
+        inequalities: {
+            easy: [
+                { q: "Solve for x: 2x - 4 > 0.", a: "x > 2" },
+                { q: "Solve for x: -3x < 9.", a: "x > -3" },
+                { q: "For what values of x is |x| < 5?", a: "-5 < x < 5" }
+            ],
+            medium: [
+                { q: "Solve the quadratic inequality: x² - 5x + 6 < 0.", a: "2 < x < 3" },
+                { q: "Solve the polynomial inequality: (x - 1)(x - 2) >= 0.", a: "x <= 1 or x >= 2" },
+                { q: "For what values of x is the expression sqrt(x - 3) real and defined?", a: "x >= 3" }
+            ],
+            tough: [
+                { q: "Solve the rational inequality: (x - 1) / (x + 2) <= 0.", a: "-2 < x <= 1" },
+                { q: "Find the range of x satisfying the inequality log_0.5(x - 1) > 1.", a: "1 < x < 1.5" }
+            ]
+        }
+    },
+    physics: {
+        mechanics: {
+            easy: [
+                { q: "What is the formula for linear momentum (p) in terms of mass (m) and velocity (v)?", a: "p = mv" },
+                { q: "What is the work done when the force vector and displacement vector are orthogonal (90 degrees)?", a: "0" },
+                { q: "State the SI unit of power.", a: "Watt" },
+                { q: "What is the acceleration of a body moving with constant velocity?", a: "0" }
+            ],
+            medium: [
+                { q: "A projectile is thrown at 45 degrees with velocity v. Find its max horizontal range output expression.", a: "v²/g" },
+                { q: "Find the velocity of a particle if its position function is x = 3t² + 2t at time t = 2s.", a: "14" },
+                { q: "What is the minimum coefficient of friction required for a car to turn safely on a flat circular track of radius r at velocity v?", a: "v²/(rg)" }
+            ],
+            tough: [
+                { q: "A solid uniform sphere rolls without slipping down an inclined plane of inclination theta. Find its linear acceleration expression.", a: "(5/7)g sin(theta)" },
+                { q: "Calculate the terminal velocity ratio of two spherical drops of radii r and 2r falling through a viscous fluid.", a: "1/4" }
+            ]
+        },
+        electrodynamics: {
+            easy: [
+                { q: "What is the resistance of an ideal ammeter?", a: "0" },
+                { q: "What is the resistance of an ideal voltmeter?", a: "Infinity" },
+                { q: "State the SI unit of electric capacitance.", a: "Farad" }
+            ],
+            medium: [
+                { q: "Calculate the equivalent capacity of two equal capacitors (each of capacity C) connected in a series configuration.", a: "C/2" },
+                { q: "If the distance between the plates of a parallel plate capacitor is doubled, its capacitance becomes how many times?", a: "0.5" },
+                { q: "Find the magnetic force on a charge q moving parallel to a uniform magnetic field B with velocity v.", a: "0" }
+            ],
+            tough: [
+                { q: "An electron enters a region of uniform magnetic field B perpendicularly with velocity v. Find its frequency of revolution expression.", a: "eB/(2*pi*m)" },
+                { q: "Find the total self-inductance per unit length of a long coaxial cable core system with inner radius a and outer radius b.", a: "mu_0 * ln(b/a) / (2*pi)" }
+            ]
+        },
+        thermodynamics: {
+            easy: [
+                { q: "Which thermodynamic process takes place at a constant volume?", a: "Isochoric" },
+                { q: "Which thermodynamic process takes place at a constant temperature?", a: "Isothermal" },
+                { q: "Write the mathematical expression for the First Law of Thermodynamics.", a: "dQ = dU + dW" }
+            ],
+            medium: [
+                { q: "A Carnot engine operates between temperatures 300K and 600K. Calculate its efficiency percentage.", a: "50%" },
+                { q: "If an ideal gas expands isothermally from volume V to 2V, find the work done expression.", a: "nRT ln(2)" }
+            ],
+            tough: [
+                { q: "A Carnot engine absorbs 1000 J of heat from a source at 600K and rejects heat to a sink at 300K. Find the exact work done per cycle.", a: "500 J" },
+                { q: "During an adiabatic process, the pressure of a gas is found to be proportional to the cube of its absolute temperature. Find the value of Cp/Cv (gamma).", a: "1.5" }
+            ]
+        },
+        modernPhysics: {
+            easy: [
+                { q: "State the dimensional formula of Planck's constant (h).", a: "M L² T⁻¹" },
+                { q: "What is the charge of an alpha particle relative to a proton?", a: "+2" },
+                { q: "Name the phenomenon that directly demonstrates the particle nature of light.", a: "Photoelectric Effect" }
+            ],
+            medium: [
+                { q: "Calculate the energy of a photon corresponding to light of wavelength 4000 Angstroms (in eV, use standard shortcut estimation).", a: "3.1 eV" },
+                { q: "If the half-life of a radioactive sample is 10 days, what fraction of the sample remains undecayed after 20 days?", a: "1/4" }
+            ],
+            tough: [
+                { q: "Find the ratio of the de Broglie wavelength of a proton and an alpha particle accelerated through the same potential difference.", a: "2" },
+                { q: "Find the radius expression of the nth Bohr orbit of a hydrogen atom in terms of principal quantum number n.", a: "0.529 * n²" }
+            ]
+        }
+    },
+    chemistry: {
+        organic: {
+            easy: [
+                { q: "What is the hybridization state of carbon in a methane gas molecule?", a: "sp3" },
+                { q: "Name the primary functional group present in CH3CH2OH.", a: "Alcohol" },
+                { q: "What gas is released when calcium carbide reacts with water?", a: "Acetylene" }
+            ],
+            medium: [
+                { q: "Identify the primary major organic product formed during a classic Williamson ether synthesis configuration.", a: "Ether" },
+                { q: "How many chiral carbons are present in a single molecule of 2-chlorobutane?", a: "1" },
+                { q: "What is the name of the reaction where an alkyl halide is treated with sodium metal in dry ether to form a symmetrical alkane?", a: "Wurtz Reaction" }
+            ],
+            tough: [
+                { q: "Identify the major product when phenol reacts with CHCl3 in the presence of aqueous NaOH (Reimer-Tiemann reaction).", a: "Salicylaldehyde" },
+                { q: "Calculate the total number of cross-aldol condensation products possible between acetaldehyde and benzaldehyde.", a: "2" }
+            ]
+        },
+        physical: {
+            easy: [
+                { q: "State the oxidation number of oxygen in typical peroxide compounds.", a: "-1" },
+                { q: "What is the pH value of pure water at 25 degrees Celsius?", a: "7" },
+                { q: "State the SI unit of molar conductivity.", a: "S cm2 mol-1" }
+            ],
+            medium: [
+                { q: "Calculate the total pH value of a 10^-8 M HCl solution matrix at room temperature.", a: "6.98" },
+                { q: "What is the order of reaction if a graph of 1/[A] versus time yields a straight line with a positive slope?", a: "Second Order" },
+                { q: "How many Faradays of electricity are required to reduce 1 mole of Al3+ ions to Al metal?", a: "3" }
+            ],
+            tough: [
+                { q: "Determine the crystal field stabilization energy (CFSE) configuration for a d6 high-spin octahedral complex field in terms of Delta_o.", a: "-0.4 Delta_o" },
+                { q: "For a gas-phase reaction where delta n (change in gaseous moles) is equal to -1, what is the value of Kp / Kc at a temperature of T Kelvin?", a: "1/(RT)" }
+            ]
+        },
+        inorganic: {
+            easy: [
+                { q: "Which group 18 element is the most abundant in the Earth's atmosphere?", a: "Argon" },
+                { q: "What is the shape of an SF6 molecule according to VSEPR theory?", a: "Octahedral" },
+                { q: "Name the process used for the commercial manufacture of ammonia gas.", a: "Haber Process" }
+            ],
+            medium: [
+                { q: "Name the type of structural isomerism shown by [Co(NH3)5(NO2)]Cl2 and [Co(NH3)5(ONO)]Cl2.", a: "Linkage Isomerism" },
+                { q: "What is the geometric shape of a XeF4 molecule according to VSEPR theory?", a: "Square Planar" },
+                { q: "Which d-block element has the highest melting point?", a: "Tungsten" }
+            ],
+            tough: [
+                { q: "Calculate the spin-only magnetic moment of an isolated Mn2+ transition metal ion (in Bohr Magnetons).", a: "5.92 BM" },
+                { q: "Write the chemical formula of the brown ring complex compound formed during the nitrate test identification loop.", a: "[Fe(H2O)5(NO)]SO4" }
+            ]
+        },
+        general: {
+            easy: [
+                { q: "What is the maximum number of electrons that can be accommodated in a p-subshell?", a: "6" },
+                { q: "Which element possesses the highest electronegativity value on the Pauling scale?", a: "Fluorine" },
+                { q: "State the empirical formula of hydrogen peroxide (H2O2).", a: "HO" }
+            ],
+            medium: [
+                { q: "Which gas deviates most from ideal behavior at low temperatures and high pressures: H2, He, or NH3?", a: "NH3" },
+                { q: "What is the total number of subshells associated with the principal quantum number n = 3?", a: "3" }
+            ],
+            tough: [
+                { q: "Arrange the halogens (F, Cl, Br, I) in order of increasing electron gain enthalpy negative magnitude values.", a: "I < Br < F < Cl" },
+                { q: "According to molecular orbital theory, what is the exact bond order of an oxygen molecule ion (O2+)?", a: "2.5" }
+            ]
+        }
+    }
+};
+
+let activeSubject = "math";
+let activeTimer = null;
+let secondsLeft = 0;
+let currentSessionQuestions = []; 
+
+window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sub = urlParams.get('subject');
+    if (sub && QUESTION_BANK[sub]) {
+        activeSubject = sub;
+    }
+    
+    document.getElementById("subject-title").innerText = `JEE ${activeSubject.toUpperCase()} Exam Panel`;
+    
+    const chapSelect = document.getElementById("chapter-select");
+    if (chapSelect) {
+        chapSelect.innerHTML = ""; 
+        Object.keys(QUESTION_BANK[activeSubject]).forEach(chap => {
+            let opt = document.createElement("option");
+            opt.value = chap;
+            opt.innerText = chap.charAt(0).toUpperCase() + chap.slice(1);
+            chapSelect.appendChild(opt);
+        });
+    }
+};
+
+function generateCustomQuizSession() {
+    const chapterSelect = document.getElementById("chapter-select");
+    const difficultySelect = document.getElementById("difficulty-select");
+    const countInput = document.getElementById("count-input");
+    const timeSelect = document.getElementById("time-select");
+    
+    const outputContainer = document.getElementById("questions-go-here");
+    const setupPanel = document.getElementById("setup-panel");
+    const quizTerminal = document.getElementById("quiz-terminal");
+
+    const chapter = chapterSelect.value;
+    const difficulty = difficultySelect.value;
+    let count = parseInt(countInput.value, 10) || 5;
+    if (count > 10) count = 10; 
+
+    if (!QUESTION_BANK[activeSubject] || !QUESTION_BANK[activeSubject][chapter] || !QUESTION_BANK[activeSubject][chapter][difficulty]) {
+        outputContainer.innerHTML = `<p style="color: #ff4757; font-weight: bold;">⚠️ No matching profile records located in repository setup bank.</p>`;
+        return;
+    }
+
+    const pool = QUESTION_BANK[activeSubject][chapter][difficulty];
+    outputContainer.innerHTML = ""; 
+
+    currentSessionQuestions = pool.slice(0, count);
+
+    setupPanel.style.display = "none";
+    quizTerminal.style.display = "block";
+
+    let selectedMinutes = parseInt(timeSelect.value, 10) || 5;
+    secondsLeft = selectedMinutes * 60;
+    startQuizClockTimer();
+
+    currentSessionQuestions.forEach((q, index) => {
+        const questionCard = document.createElement("div");
+        questionCard.className = "question-card";
+
+        questionCard.innerHTML = `
+            <span style="font-size: 11px; text-transform: uppercase; color: #00d2d3; font-weight: bold; letter-spacing: 1px;">Question ${index + 1}</span>
+            <p style="font-size: 15px; margin: 8px 0 15px 0; font-weight: 600; line-height: 1.5; color: #ffffff;">${q.q}</p>
+            <input type="text" id="ans-${index}" class="quiz-text-input" placeholder="Type your evaluated final output answer...">
+            <div id="feedback-${index}" style="margin-top: 12px; font-size: 13px; font-weight: bold; display: none;"></div>
+        `;
+        outputContainer.appendChild(questionCard);
+    });
+}
+
+function startQuizClockTimer() {
+    clearInterval(activeTimer);
+    updateClockDisplayHTML();
+    
+    activeTimer = setInterval(() => {
+        secondsLeft--;
+        updateClockDisplayHTML();
+        if (secondsLeft <= 0) {
+            clearInterval(activeTimer);
+            alert("⏰ Out of time allocation window! Auto-finalizing sheet evaluation.");
+            submitQuizSession();
+        }
+    }, 1000);
+}
+
+function updateClockDisplayHTML() {
+    let mins = Math.floor(secondsLeft / 60);
+    let secs = secondsLeft % 60;
+    document.getElementById("quiz-clock").innerText = `Time Remaining: ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+}
+
+function submitQuizSession() {
+    // 1. Immediately halt the timer countdown loop
+    clearInterval(activeTimer);
+    let earnedXP = 0;
+    
+    // 2. Loop through evaluated items, lock inputs, and update feedback UI
+    currentSessionQuestions.forEach((q, index) => {
+        const userInputField = document.getElementById(`ans-${index}`);
+        const feedbackDiv = document.getElementById(`feedback-${index}`);
+        
+        if (userInputField) {
+            // Lock inputs instantly to make answers unchangeable
+            userInputField.disabled = true; 
+
+            if (feedbackDiv) {
+                feedbackDiv.style.display = "block";
+                const cleanUserAns = userInputField.value.trim().toLowerCase();
+                const cleanCorrectAns = q.a.trim().toLowerCase();
+                
+                if (cleanUserAns === cleanCorrectAns) {
+                    feedbackDiv.innerText = `✅ Correct! Value: "${q.a}" (+50 XP)`;
+                    feedbackDiv.style.color = "#2ed573";
+                    earnedXP += 50;
+                } else {
+                    feedbackDiv.innerText = `❌ Incorrect. Verified Answer Key: "${q.a}"`;
+                    feedbackDiv.style.color = "#ff4757";
+                }
+            }
+        }
+    });
+
+    // 3. Process localized account state additions (XP updates exactly once here)
+    let existingXP = parseInt(localStorage.getItem("totalUserXP") || "1250", 10);
+    localStorage.setItem("totalUserXP", existingXP + earnedXP);
+    
+    alert(`🎉 Valuation Matrix Complete! Profile metrics updated: Added +${earnedXP} XP.`);
+    
+    if (window.opener || window.parent) {
+        try { window.opener.renderNationalLeaderboard(); } catch(e){}
+    }
+
+    // 4. Transform bottom action layout — force return rule options
+    const actionZone = document.getElementById("quiz-action-zone");
+    if (actionZone) {
+        actionZone.innerHTML = `
+            <button class="btn-launch" style="background:#ff4757;" onclick="window.location.href='index.html'">
+                Return to Dashboard Index 🏠
+            </button>
+        `;
+    }
+}
+</script>
+</body>
+</html>

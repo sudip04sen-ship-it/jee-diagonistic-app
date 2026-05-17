@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style1.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Study Deck</title>
+    <link rel="stylesheet" href="style1.css">
+    <!-- This script automatically converts text inside $ signs into gorgeous math formulas! -->
+<<!-- 1. Configure MathJax to recognize single dollar signs -->
+<script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$']],
+            displayMath: [['$$', '$$']]
+        }
+    };
+</script>
+
+<!-- 2. Load the actual MathJax Engine -->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Simulation Terminal</title>
+    <style>
+        body { background-color: #0f0f1a; color: #fff; font-family: 'Segoe UI', sans-serif; padding: 30px; margin: 0; }
+        .quiz-container { max-width: 700px; margin: 0 auto; background: #1e1e2f; padding: 30px; border-radius: 12px; border: 1px solid #333; }
+        .header-meta { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
+        .timer-badge { background-color: #ff4757; padding: 8px 15px; border-radius: 20px; font-weight: bold; font-family: monospace; font-size: 18px; }
+        .option-btn { display: block; width: 100%; text-align: left; padding: 15px; margin: 10px 0; background: #2f3542; border: 1px solid #57606f; border-radius: 6px; color: white; cursor: pointer; font-size: 16px; transition: background 0.2s; }
+        .option-btn:hover { background: #3e4453; }
+        .option-btn.correct { background: #2ed573 !important; border-color: #2ed573; color: white; }
+        .option-btn.wrong { background: #ff4757 !important; border-color: #ff4757; color: white; }
+        .next-btn { float: right; background: #1e90ff; color: white; padding: 12px 30px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; display: none; margin-top: 15px; }
+        .explanation-box { background-color: #2f3542; border-left: 5px solid #ff9f43; padding: 15px; margin-top: 15px; border-radius: 0 5px 5px 0; display: none; }
+        .results-screen { text-align: center; display: none; }
+        .premium-blur { filter: blur(4px); pointer-events: none; user-select: none; }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <!-- LIVE GAMEPLAY MODE -->
+        <div id="quiz-gameplay">
+            <div class="header-meta">
+                <span id="progress-text" style="font-weight: bold; color: #a4b0be;">Question 1 of X</span>
+                <div class="timer-badge">⏳ <span id="game-clock">00:00</span></div>
+            </div>
+
+            <div id="question-box">
+                <h2 id="question-text" style="margin-bottom: 25px;">Loading question trajectory...</h2>
+                <div id="options-container"></div>
+            </div>
+
+            <div id="explanation-wrapper" class="explanation-box">
+                <strong style="color: #ff9f43;">💡 Step-by-Step Explanation:</strong>
+                <p id="explanation-text" style="margin: 5px 0 0 0; font-size: 15px; line-height: 1.5;"></p>
+            </div>
+
+            <button id="next-button" class="next-btn" onclick="nextQuestion()">Next Question →</button>
+            <div style="clear: both;"></div>
+        </div>
+
+        <!-- END GAME SCORING MATRIX -->
+        <div id="quiz-results" class="results-screen">
+            <h1 style="color: #2ed573; margin-top: 0;">💥 Simulation Complete!</h1>
+            <p style="font-size: 20px;">Your Score: <span id="final-score" style="font-weight: bold; color: #ff9f43;">0/0</span></p>
+            <p id="xp-reward-text" style="color: #10ac84; font-weight: bold; font-size: 18px;"></p>
+            <a href="index.html" style="text-decoration: none;"><button style="background: #576574; color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 20px;">Return to Dashboard</button></a>
+        </div>
+    </div>
+
+    <script>
+       // 📦 EXPANDED QUESTION BANK
+const masterQuestionBank = [
+    { id: 1, topic: "quadratic-equations", level: "easy", q: "Find the roots of the equation: $x^2 - 5x + 6 = 0$.", options: ["x = 2, 3", "x = 1, 5", "x = -2, -3", "x = 0, 6"], answer: 0, exp: "Factoring gives $(x-2)(x-3) = 0$, so $x = 2, 3$." },
+    { id: 2, topic: "quadratic-equations", level: "easy", q: "What is the product of the roots of the equation $x^2 - 7x + 12 = 0$?", options: ["7", "12", "-7", "-12"], answer: 1, exp: "For $ax^2+bx+c=0$, the product of roots is $c/a$. Here, $12/1 = 12$." },
+    { id: 3, topic: "quadratic-equations", level: "easy", q: "What is the sum of the roots of the equation $x^2 - 9x + 20 = 0$?", options: ["9", "-9", "20", "-20"], answer: 0, exp: "The sum of roots is $-b/a$. Here, $-(-9)/1 = 9$." },
+    { id: 4, topic: "quadratic-equations", level: "easy", q: "If one root of $x^2 - 5x + k = 0$ is 2, find the value of k.", options: ["5", "6", "2", "3"], answer: 1, exp: "Substitute $x=2$: $(2)^2 - 5(2) + k = 0 \\rightarrow 4 - 10 + k = 0 \\rightarrow k = 6$." },
+    { id: 5, topic: "quadratic-equations", level: "easy", q: "Find the discriminant of the quadratic equation $x^2 + 4x + 4 = 0$.", options: ["16", "4", "0", "-16"], answer: 2, exp: "$D = b^2 - 4ac = 4^2 - 4(1)(4) = 16 - 16 = 0$." }
+];
+
+// Parse parameters carefully from URL query strings
+const urlParams = new URLSearchParams(window.location.search);
+const activeTopic = urlParams.get('topic') || 'quadratic-equations';
+const activeLevel = urlParams.get('level') || 'easy';
+const maxQuestionsRequested = parseInt(urlParams.get('qty')) || 3;
+const timeLimitMinutes = parseInt(urlParams.get('time')) || 2;
+
+let activeQuizPool = [];
+let currentQuestionIdx = 0;
+let scoreCounter = 0;
+let countdownInterval;
+let totalTimeSeconds = maxQuestionsRequested * timeLimitMinutes * 60;
+
+const userIsPremium = localStorage.getItem("isPremium") === "true";
+
+// Automatically boot up the setup process
+buildAndShuffleQuizPool();
+
+function buildAndShuffleQuizPool() {
+    // 🎯 Filter matching parameters
+    activeQuizPool = masterQuestionBank.filter(item => item.topic === activeTopic && item.level === activeLevel);
+    
+    // 🛡️ Error-Proof Fallback: If no match, grab whatever matches the topic ignoring difficulty
+    if (activeQuizPool.length === 0) {
+        activeQuizPool = masterQuestionBank.filter(item => item.topic === activeTopic);
+    }
+    
+    // 🛡️ Ultimate Fallback: If still empty, just load all available questions so it never crashes!
+    if (activeQuizPool.length === 0) {
+        activeQuizPool = [...masterQuestionBank];
+    }
+
+    // Shuffling math array randomly
+    activeQuizPool.sort(() => Math.random() - 0.5);
+
+    // Limit pool length based on user setup input box
+    if (activeQuizPool.length > maxQuestionsRequested) {
+        activeQuizPool = activeQuizPool.slice(0, maxQuestionsRequested);
+    }
+
+    startTimerCountdown();
+    renderQuestion();
+}
+
+function startTimerCountdown() {
+    clearInterval(countdownInterval); // Clear any ghost intervals running
+    countdownInterval = setInterval(() => {
+        if (totalTimeSeconds <= 0) {
+            clearInterval(countdownInterval);
+            terminateSimulation();
+        } else {
+            totalTimeSeconds--;
+            let displayMins = Math.floor(totalTimeSeconds / 60);
+            let displaySecs = totalTimeSeconds % 60;
+            document.getElementById("game-clock").innerText = 
+                `${displayMins.toString().padStart(2,'0')}:${displaySecs.toString().padStart(2,'0')}`;
+        }
+    }, 1000);
+}
+
+function renderQuestion() {
+    document.getElementById("explanation-wrapper").style.display = "none";
+    document.getElementById("next-button").style.display = "none";
+    
+    let currentItem = activeQuizPool[currentQuestionIdx];
+    document.getElementById("progress-text").innerText = `Question ${currentQuestionIdx + 1} of ${activeQuizPool.length}`;
+    document.getElementById("question-text").innerText = currentItem.q;
+
+    let optionsContainer = document.getElementById("options-container");
+    optionsContainer.innerHTML = "";
+
+    currentItem.options.forEach((optText, index) => {
+        let btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.innerText = optText;
+        btn.onclick = () => evaluationSelection(btn, index);
+        optionsContainer.appendChild(btn);
+    });
+
+    // Run MathJax rendering processor
+    if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise();
+    }
+}
+
+function evaluationSelection(selectedBtn, chosenIdx) {
+    let currentItem = activeQuizPool[currentQuestionIdx];
+    let allButtons = document.querySelectorAll(".option-btn");
+
+    allButtons.forEach(btn => btn.disabled = true);
+
+    if (chosenIdx === currentItem.answer) {
+        selectedBtn.classList.add("correct");
+        scoreCounter++;
+    } else {
+        selectedBtn.classList.add("wrong");
+        allButtons[currentItem.answer].classList.add("correct");
+    }
+
+    let expBox = document.getElementById("explanation-wrapper");
+    let expText = document.getElementById("explanation-text");
+    
+    // Clear old notices if any exist
+    const oldNotices = expBox.querySelectorAll('.lock-notice-text');
+    oldNotices.forEach(n => n.remove());
+
+    expBox.style.display = "block";
+
+    if (userIsPremium) {
+        expText.className = ""; 
+        expText.innerText = currentItem.exp;
+    } else {
+        expText.className = "premium-blur";
+        expText.innerText = "This advanced analysis step is obfuscated. Upgrade to premium profile to instantly reveal calculations.";
+        
+        let lockNotice = document.createElement("div");
+        lockNotice.className = "lock-notice-text";
+        lockNotice.innerHTML = "<p style='color:#ff4757; font-size:12px; margin-top:5px; font-weight:bold;'>⚠️ Explanations locked! Available in Premium Tier.</p>";
+        expBox.appendChild(lockNotice);
+    }
+
+    // Trigger math equations typesetting refresh for explanations too!
+    if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise();
+    }
+
+    document.getElementById("next-button").style.display = "block";
+}
+
+function nextQuestion() {
+    currentQuestionIdx++;
+    if (currentQuestionIdx < activeQuizPool.length) {
+        renderQuestion();
+    } else {
+        clearInterval(countdownInterval);
+        terminateSimulation();
+    }
+}
+
+function terminateSimulation() {
+    document.getElementById("quiz-gameplay").style.display = "none";
+    document.getElementById("quiz-results").style.display = "block";
+    document.getElementById("final-score").innerText = `${scoreCounter} / ${activeQuizPool.length}`;
+
+    let xpEarned = scoreCounter * 20;
+    let currentGlobalXP = parseInt(localStorage.getItem("userXP")) || 0;
+    localStorage.setItem("userXP", currentGlobalXP + xpEarned);
+
+    document.getElementById("xp-reward-text").innerText = `🎉 You earned +${xpEarned} XP tracking points!`;
+}
+    </script>
+</body>
+</html>

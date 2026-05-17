@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JEE Aspirant Dashboard Terminal</title>
+
+    <style>
+
+        /* 1. CORE LAYOUT & SCROLL RESTORE */
+
+        body {
+
+            background-color: #0b0b14;
+
+            color: #e2e8f0;
+
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+            margin: 0;
+
+            padding: 25px;
+
+            box-sizing: border-box;
+
+            overflow-x: hidden;
+
+        }
+
+
+
+        /* 2. REUSABLE CONTAINER BLOCKS */
+
+        .widget-box {
+
+            background: linear-gradient(145deg, #131324, #1b1b32);
+
+            border: 1px solid #2e2e4e;
+
+            border-radius: 12px;
+
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+
+            padding: 15px;
+
+            box-sizing: border-box;
+
+        }
+
+
+
+        /* 3. FIXED STEALTH SLIDE-OUT MENU MECHANISM */
+
+        .menu-wrapper {
+
+            position: relative;
+
+            display: inline-block;
+
+        }
+
+
+
+        .dots-trigger {
+
+            font-size: 32px;
+
+            color: #00d2d3;
+
+            cursor: pointer;
+
+            padding: 5px 10px;
+
+            user-select: none;
+
+        }
+
+
+
+        /* Keep it hidden and collapsed by default */
+
+        .horizontal-drawer {
+
+            display: none;
+
+            position: absolute;
+
+            top: 100%;
+
+            right: 0;
+
+            background-color: #1b1b32;
+
+            border: 1px solid #2e2e4e;
+
+            border-radius: 8px;
+
+            padding: 10px;
+
+            white-space: nowrap;
+
+            z-index: 100;
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+
+        }
+
+
+
+        /* Show cleanly only when hovering over the menu-wrapper area */
+
+        .menu-wrapper:hover .horizontal-drawer {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 10px;
+
+        }
+
+
+
+        .drawer-item {
+
+            color: #e2e8f0;
+
+            font-size: 13px;
+
+            cursor: pointer;
+
+            padding: 4px 8px;
+
+            border-radius: 4px;
+
+            transition: background 0.2s;
+
+        }
+
+
+
+        .drawer-item:hover {
+
+            background-color: #2e2e4e;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+
+    <!-- ================= 1. DASHBOARD HEADER AREA ================= -->
+
+    <header style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin: 0 0 25px 0; padding: 0 0 15px 0; border-bottom: 1px solid #2e2e4e;">
+
+        
+
+        <!-- LEFT PANEL: LOGO INSIGNIA & HEADLINES -->
+
+        <div style="display: flex; align-items: center; gap: 20px;">
+
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+
+                <div style="width: 75px; height: 75px; background: linear-gradient(135deg, #4d00ff, #00d2d3); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(77, 0, 255, 0.4); border: 2px solid #fff; box-sizing: border-box;">
+
+                    <span style="font-size: 10px; font-weight: bold; color: white; text-align: center; line-height: 1.2; padding: 3px; letter-spacing: 0.5px;">TRUST IS OUR MOTTO</span>
+
+                </div>
+
+                <div style="font-size: 10px; color: #a4b0be; margin-top: 6px; font-weight: bold; white-space: nowrap; letter-spacing: 0.3px;">
+
+                    Engineered by an International Medalist
+
+                </div>
+
+            </div>
+
+            <h1 style="font-size: 24px; color: #ffffff; margin: 0; font-weight: 800; max-width: 550px; line-height: 1.3;">
+
+                Welcome to the website crafted for the future <span style="color: #00d2d3;">JEE aspirants</span>.
+
+            </h1>
+
+        </div>
+
+
+
+        <!-- RIGHT PANEL: HIDDEN NAVIGATION ANCHOR -->
+
+        <div class="menu-wrapper">
+
+            <div class="dots-trigger">⋮</div>
+
+          <div class="horizontal-drawer">
+    <span class="drawer-item" onclick="window.location.href='home.html'" style="color: #00d2d3; font-weight: bold;">🏠 Main Landing Portal</span>
+    <span class="drawer-item" onclick="window.location.href='profile.html'">👤 My Performance Profile</span>
+    <span class="drawer-item" onclick="toggleThemeMode()">🌓 Theme Switch</span>
+    <span class="drawer-item" onclick="resetToNormalTrack()">📐 Normal Study Deck</span>
+</div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ================= 2. MANUAL RE-ENGINEERED COUNTDOWN TIMER ================= -->
+
+    <div class="widget-box" style="margin-bottom: 25px; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #ff4757;">
+
+        <div style="display: flex; align-items: center; gap: 15px;">
+
+            <span style="font-size: 24px;">⏱️</span>
+
+            <div>
+
+                <h4 style="margin: 0; font-size: 14px; color: #fff; text-transform: uppercase; letter-spacing: 0.5px;">Custom Study Session Terminal</h4>
+
+                <div style="margin-top: 5px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+
+                    <label style="font-size: 12px; color: #a4b0be;">Set Duration:</label>
+
+                    <input type="number" id="user-timer-input" value="25" min="1" max="180" style="width: 60px; background: #0b0b14; border: 1px solid #444; color: #fff; padding: 4px; border-radius: 4px; text-align: center; font-weight: bold;">
+
+                    <span style="font-size: 12px; color: #a4b0be;">minutes</span>
+
+                    <button onclick="startCustomStudyCountdown()" style="background: #ff4757; color: white; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer;">Start Session ⚡</button>
+
+                    <button onclick="resetCustomStudyCountdown()" style="background: #576574; color: white; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer;">Reset</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Live Numerical Output Display -->
+
+        <div id="countdown-clock-display" style="font-family: 'Courier New', Courier, monospace; font-size: 22px; font-weight: bold; color: #ff4757; background: #0b0b14; padding: 8px 16px; border-radius: 4px; border: 1px solid #ff4757; letter-spacing: 1px; white-space: nowrap;">
+
+            25m : 00s
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= 3. FOUR CATEGORY COMMAND HUB MATRIX ================= -->
+
+    <div style="display: flex; justify-content: space-between; gap: 15px; margin-bottom: 30px; align-items: stretch; flex-wrap: wrap;">
+
+        
+
+        <!-- CATEGORY 1: LEADERBOARD BOARD -->
+
+        <section class="widget-box" style="flex: 1; min-width: 240px; display: flex; flex-direction: column; justify-content: space-between;">
+
+            <div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+
+                    <h3 style="margin: 0; font-size: 16px; color: #ffffff;">🏁 Leaderboard</h3>
+
+                    <span id="leaderboard-tier" style="background-color: #576574; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold;">NORMAL</span>
+
+                </div>
+
+                <ol id="leaderboard-list" style="padding-left: 15px; margin: 0; font-size: 13px; line-height: 1.6;">
+
+                    <li style="color: #ffd700;">👑 TopAspirant - 5.2k</li>
+
+                    <li style="color: #c0c0c0;">🥈 PhysicsGod - 3.4k</li>
+
+                    <li style="color: #cd7f32;">🥉 MathGrinder - 1.8k</li>
+
+                    <li><strong>You - <span id="user-leaderboard-xp">0</span> XP</strong></li>
+
+                </ol>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- CATEGORY 2: THE QUIZ ENGINE ENTRY -->
+
+        <!-- CATEGORY 2: THE QUIZ ENGINE ENTRY -->
+
+<section class="widget-box" style="flex: 1; min-width: 240px; display: flex; flex-direction: column; justify-content: space-between;">
+
+    <div>
+
+        <h3 style="color: #00d2d3; margin: 0 0 8px 0; font-size: 16px;">🧠 Custom Quizzes</h3>
+
+        <p style="margin: 0 0 12px 0; font-size: 12px; color: #a4b0be; line-height: 1.4;">Solve tailored JEE problem streams, rack up XP points, and climb tiers.</p>
+
+    </div>
+
+    <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+
+        <!-- Perfectly routes to your new configuration system -->
+
+        <a href="quiz-setup.html?subject=math" style="text-decoration: none; flex: 1;"><button style="background-color: #ff4757; color: white; padding: 6px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 11px; width: 100%;">Maths</button></a>
+
+        <a href="quiz-setup.html?subject=physics" style="text-decoration: none; flex: 1;"><button style="background-color: #1e90ff; color: white; padding: 6px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 11px; width: 100%;">Phys</button></a>
+
+        <a href="quiz-setup.html?subject=chemistry" style="text-decoration: none; flex: 1;"><button style="background-color: #2ed573; color: white; padding: 6px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 11px; width: 100%;">Chem</button></a>
+
+    </div>
+
+</section>
+
+
+
+        <!-- CATEGORY 3: FLASHCARDS SYSTEMS -->
+<!-- ================= TACTICAL FLASHCARD TERMINAL ================= -->
+<div id="flashcard-deck-terminal" style="margin-top: 25px;">
+    
+    <!-- Subject Filter Selectors -->
+   <div class="flashcard-box" style="border: 1px solid #2e2e4e; padding: 20px; border-radius: 12px; background: linear-gradient(145deg, #131324, #1b1b32); max-width: 400px; margin: 20px auto; text-align: center;">
+    <!-- Flashcard Header/Topic -->
+    <span id="card-topic" style="font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: #00d2d1; font-weight: bold;">Loading...</span>
+    
+    <!-- Core Equation Formula Frame -->
+    <h2 id="card-formula" style="color: #ffffff; margin: 15px 0; font-size: 22px; font-family: 'Courier New', Courier, monospace;">--</h2>
+    
+    <!-- Explanatory Hack Descriptor -->
+    <p id="card-hack" style="color: #e2e8f0; font-size: 14px; line-height: 1.5; min-height: 50px;">--</p>
+    
+    <hr style="border: 0; border-top: 1px solid #2e2e4e; margin: 15px 0;">
+
+    <!-- THE REFRESH TRIGGER -->
+    <button onclick="displayRandomFlashcard()" class="btn-refresh" style="background: #341f97; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: background 0.2s;">
+        🔄 Refresh Next Hack
+    </button>
+</div>
+<script>
+    const FLASHCARD_DECK = {
+    math: [
+        { topic: "Vectors / 3D", formula: "[a b c] = a · (b × c)", hack: "Scalar Triple Product. If this equals 0, the vectors are completely coplanar." },
+        { topic: "Probability", formula: "P(A|B) = P(B|A)·P(A) / P(B)", hack: "Bayes' Theorem shortcut tracker. Use when looking for reverse conditional state outcomes." },
+        { topic: "Matrices", formula: "A · adj(A) = |A| · I", hack: "Essential shortcut for finding determinants or inverses without long row operations." }
+    ],
+    physics: [
+        { topic: "Optics", formula: "μ = sin((A + Dm)/2) / sin(A/2)", hack: "Prism Formula. Use for tracking minimum deviation (Dm) shortcuts instantly." },
+        { topic: "Modern Physics", formula: "r_n = 0.529 * (n² / Z) Å", hack: "Bohr orbit radius calculation model. Essential for tracking rapid transitions." },
+        { topic: "Fluids", formula: "v = sqrt(2gh)", hack: "Torricelli's Law of Efflux. Speed of liquid leaving an opening matches free fall from height h." }
+    ],
+    chemistry: [
+        { topic: "Organic Chemistry", formula: "Rate ∝ Stability of Carbocation", hack: "SN1 Reaction Speed. Tertiary > Secondary > Primary. Always check for hydride/methyl shifts!" },
+        { topic: "Physical Chemistry", formula: "t_75% = 2 * t_50%", hack: "First-Order Reactions shortcut. The time required for 75% completion is exactly double the half-life." },
+        { topic: "Inorganic Chemistry", formula: "Magnetic Moment = sqrt(n(n+2)) BM", hack: "Spin-only formula. 'n' is the number of unpaired d-electrons. Match the first digit of BM to 'n' (e.g., 5.92 BM means n=5)." },
+        { topic: "Chemical Bonding", formula: "Bond Order = (N_b - N_a) / 2", hack: "MO Theory shortcut: For 14 electrons (N2), B.O. is 3. Subtract 0.5 for every electron added or removed (e.g., O2 with 16 e- is 2.0)." },
+        { topic: "Solutions", formula: "i = 1 + (n - 1)α", hack: "Van 't Hoff Factor shortcut for dissociation. Quick calculation for freezing point depression and boiling point elevation bugs." }
+    ]
+};
+// Global variable to hold current flashcard view state
+let currentFlashcard = null;
+
+function displayRandomFlashcard() {
+    // 1. Gather all cards from all subjects into one big pool
+    let allCards = [];
+    Object.keys(FLASHCARD_DECK).forEach(subject => {
+        allCards = allCards.concat(FLASHCARD_DECK[subject]);
+    });
+
+    // 2. Prevent pulling the exact same card twice in a row if possible
+    let randomIndex = Math.floor(Math.random() * allCards.length);
+    let selectedCard = allCards[randomIndex];
+
+    currentFlashcard = selectedCard;
+
+    // 3. Update the HTML elements smoothly
+    const topicEl = document.getElementById("card-topic");
+    const formulaEl = document.getElementById("card-formula");
+    const hackEl = document.getElementById("card-hack");
+
+    if (topicEl && formulaEl && hackEl) {
+        topicEl.innerText = selectedCard.topic;
+        formulaEl.innerText = selectedCard.formula;
+        hackEl.innerText = selectedCard.hack;
+    }
+}
+
+// Ensure a card loads up automatically when the dashboard opens
+window.addEventListener('DOMContentLoaded', (event) => {
+    displayRandomFlashcard();
+});
+
+</script>
+
+
+
+        <!-- CATEGORY 4: COMPREHENSIVE AI SOLVER BOX -->
+
+        <section class="widget-box" style="flex: 1; min-width: 240px; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid #9b59b6;">
+
+            <div>
+
+                <h3 style="color: #9b59b6; margin: 0 0 4px 0; font-size: 16px;">🔮 AI Question Solver</h3>
+
+                <p style="margin: 0 0 8px 0; font-size: 11px; color: #a4b0be; line-height: 1.3;">Solves any complex theoretical question or calculation profile instantly.</p>
+
+                <input type="text" id="universal-solver-input" placeholder="Paste your question here..." style="width: 100%; background: #0b0b14; border: 1px solid #444; color: white; padding: 6px; border-radius: 4px; font-size: 11px; box-sizing: border-box; margin-bottom: 5px;">
+
+            </div>
+
+            <button onclick="executeUniversalAISolverCall()" style="background: #9b59b6; color: white; border: none; padding: 8px; border-radius: 4px; font-weight: bold; font-size: 12px; width: 100%; cursor: pointer;">Process Question 🧠</button>
+
+        </section>
+
+    </div>
+
+
+
+    <!-- DYNAMIC PLACEMENT CONTAINER FOR INTEGRATION CODES -->
+
+    <div id="universal-solver-output-panel" class="widget-box" style="background-color: #131324; max-width: 600px; margin: 0 auto 30px auto; display: none; border-left: 3px solid #2ed573;"></div>
+
+
+
+    <!-- ================= 4. THE VISUAL BOUNDARY SPLIT HORIZON ================= -->
+
+    <hr style="border: 0; height: 1px; background: linear-gradient(90deg, transparent, #2e2e4e, transparent); margin: 40px 0 20px 0;">
+
+
+
+
+
+    <!-- ================= 6. COMPLETE RE-ARRANGED JAVASCRIPT SYSTEM ================= -->
+
+    <script>
+
+        // Core states
+
+        let studyCountdownInstance = null;
+
+        let studySecondsRemainingLeft = 0;
+
+
+
+        function startCustomStudyCountdown() {
+
+            // Kill existing loops immediately
+
+            clearInterval(studyCountdownInstance);
+
+            
+
+            // Extract, validate, and isolate value integers safely
+
+            let rawValue = document.getElementById("user-timer-input").value;
+
+            let selectedMinutes = parseInt(rawValue, 10);
+
+            
+
+            if (isNaN(selectedMinutes) || selectedMinutes < 1) {
+
+                selectedMinutes = 25;
+
+            }
+
+            
+
+            studySecondsRemainingLeft = selectedMinutes * 60;
+
+            renderStudyClockOutput();
+
+            
+
+            // Establish runtime frame ticks
+
+            studyCountdownInstance = setInterval(function() {
+
+                studySecondsRemainingLeft--;
+
+                renderStudyClockOutput();
+
+                
+
+                if (studySecondsRemainingLeft <= 0) {
+
+                    clearInterval(studyCountdownInstance);
+
+                    triggerAudioBellSystemAlert();
+
+                    setTimeout(function() {
+
+                        alert("⏰ Session Complete! Step away from the screen.");
+
+                    }, 100);
+
+                }
+
+            }, 1000);
+
+        }
+
+
+
+        function resetCustomStudyCountdown() {
+
+            clearInterval(studyCountdownInstance);
+
+            let selectedMinutes = parseInt(document.getElementById("user-timer-input").value, 10) || 25;
+
+            document.getElementById("countdown-clock-display").innerText = selectedMinutes + "m : 00s";
+
+        }
+
+
+
+        function renderStudyClockOutput() {
+
+            let mins = Math.floor(studySecondsRemainingLeft / 60);
+
+            let secs = studySecondsRemainingLeft % 60;
+
+            
+
+            let displayMins = String(mins).padStart(2, '0');
+
+            let displaySecs = String(secs).padStart(2, '0');
+
+            
+
+            document.getElementById("countdown-clock-display").innerText = displayMins + "m : " + displaySecs + "s";
+
+        }
+
+
+
+        function triggerAudioBellSystemAlert() {
+
+            try {
+
+                let AudioCtx = window.AudioContext || window.webkitAudioContext;
+
+                if (!AudioCtx) return;
+
+                
+
+                let audioCtx = new AudioCtx();
+
+                let osc = audioCtx.createOscillator();
+
+                let gain = audioCtx.createGain();
+
+                
+
+                osc.type = 'sine';
+
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime); 
+
+                
+
+                gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.8);
+
+                
+
+                osc.connect(gain);
+
+                gain.connect(audioCtx.destination);
+
+                
+
+                osc.start();
+
+                osc.stop(audioCtx.currentTime + 0.8);
+
+            } catch(err) {
+
+                console.log("Audio pipeline muted by document user gesture policies.");
+
+            }
+
+        }
+
+
+// =====================================================================
+// 🏆 LIVE CLOUD-CONNECTED NATIONAL LEADERBOARD LOGIC
+// =====================================================================
+
+async function renderNationalLeaderboard() {
+    let listContainer = document.getElementById("leaderboard-list");
+    if (!listContainer) return;
+    
+    // Fetch current active user's local name for identity highlighting
+    let currentName = localStorage.getItem("currentUserName") || "You (Aspirant)";
+
+    // Set UI loading indicator state
+    listContainer.innerHTML = `<li style="color:#a4b0be; list-style:none;">Syncing live leaderboard matrix...</li>`;
+
+    try {
+        // Query your cloud backend endpoint running on Vercel
+        const response = await fetch('/api/get-scores');
+        const data = await response.json();
+
+        // Wipe loading text cleanly before appending entries
+        listContainer.innerHTML = ""; 
+
+        if (!data.ranks || data.ranks.length === 0) {
+            listContainer.innerHTML = `<li style="color:#a4b0be; list-style:none;">No active terminal records found. Solve a quiz to register!</li>`;
+            return;
+        }
+
+        // Build the dynamic live visual HTML output
+        data.ranks.forEach((player, idx) => {
+            let li = document.createElement("li");
+            
+            // Apply rewards for podium positions matching your styling rules
+            if (idx === 0) li.style.color = "#ffd700";      // 👑 Gold
+            else if (idx === 1) li.style.color = "#c0c0c0"; // 🥈 Silver
+            else if (idx === 2) li.style.color = "#cd7f32"; // 🥉 Bronze
+            
+            // Highlight the active session player character matching cloud names
+            if (player.username === currentName) {
+                li.innerHTML = `<strong>${idx + 1}. ${player.username} — ${player.total_xp} XP (You)</strong>`;
+            } else {
+                li.innerHTML = `${idx + 1}. ${player.username} — ${player.total_xp} XP`;
+            }
+            listContainer.appendChild(li);
+        });
+
+    } catch (error) {
+        console.error("Leaderboard interface render failure:", error);
+        listContainer.innerHTML = `<li style="color:#ff4757; list-style:none;">⚠️ Failed to load national rankings.</li>`;
+    }
+}
+
+// Securely dispatch new points to the backend
+async function syncUserScoreToCloud(username, currentXP) {
+    if (!username || currentXP <= 0) return;
+    
+    try {
+        const response = await fetch('/api/save-score', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: username, totalXP: currentXP })
+        });
+        
+        if (response.ok) {
+            console.log("Global scoreboard state synchronized successfully.");
+            // Refresh rankings to dynamically display your entry instantly
+            renderNationalLeaderboard(); 
+        }
+    } catch (err) {
+        console.error("Cloud tracking database broadcast failure:", err);
+    }
+}
+
+// Setup Username Gateway prompt if missing on initial site bootup
+if (!localStorage.getItem("currentUserName")) {
+    let inputName = prompt("Enter your Aspirant Profile Display Name:", "Aspirant_" + Math.floor(1000 + Math.random() * 9000));
+    if (inputName) {
+        localStorage.setItem("currentUserName", inputName.trim());
+    }
+}
+
+// =====================================================================
+// 🎬 INITIALIZATION SEQUENCE ON BOOTUP
+// =====================================================================
+let currentXPValue = parseInt(localStorage.getItem("totalUserXP") || "0", 10);
+let currentUserNameString = localStorage.getItem("currentUserName") || "Aspirant";
+
+let displayXpNode = document.getElementById("user-leaderboard-xp");
+if (displayXpNode) displayXpNode.innerText = currentXPValue;
+
+// Trigger database push if points have accumulated locally
+if (currentXPValue > 0) {
+    syncUserScoreToCloud(currentUserNameString, currentXPValue);
+} else {
+    renderNationalLeaderboard();
+}
+
+        // Interface helper bindings
+
+        function openPremiumModal() { document.getElementById("premium-modal").style.display = "flex"; }
+
+        function closePremiumModal() { document.getElementById("premium-modal").style.display = "none"; }
+
+        function resetToNormalTrack() { window.location.reload(); }
+
+        function toggleThemeMode() { document.body.style.background = document.body.style.background === "rgb(255, 255, 255)" ? "#0b0b14" : "#fff"; document.body.style.color = document.body.style.color === "rgb(11, 11, 20)" ? "#e2e8f0" : "#0b0b14"; }
+
+
+
+       
+        function toggleThemeMode() {
+    // 1. Check current state via background color parameter
+    let currentBg = document.body.style.backgroundColor || "";
+    
+    // 2. Select all target elements that need to shift together
+    let mainHeading = document.querySelector('h1');
+    let subHeadings = document.querySelectorAll('h2, h3, strong');
+    let descriptiveText = document.querySelectorAll('p, span, label, li');
+    let layoutBoxes = document.querySelectorAll('.widget-box, .flashcard-box, #flashcard-display-container > div');
+
+    if (currentBg === "rgb(255, 255, 255)" || currentBg === "white") {
+        // =============================================================
+        // [SNAP BACK TO DARK INDUSTRIAL TERMINAL]
+        // =============================================================
+        document.body.style.backgroundColor = "#0b0b14";
+        document.body.style.color = "#e2e8f0";
+        
+        if (mainHeading) mainHeading.style.color = "#ffffff";
+
+        // Restore card frames to deep space matrix
+        layoutBoxes.forEach(box => {
+            box.style.background = "linear-gradient(145deg, #131324, #1b1b32)";
+            box.style.borderColor = "#2e2e4e";
+        });
+
+        // Bring headers back to stark white
+        subHeadings.forEach(h => {
+            // Keep specialized prize track colors (Teal, Gold) intact
+            if (!h.style.color.includes('rgb(0') && !h.style.color.includes('rgb(255, 215')) {
+                h.style.color = "#ffffff";
+            }
+        });
+
+        // Return regular texts to high-contrast light slate gray
+        descriptiveText.forEach(el => {
+            if (el.className !== 'dots-trigger' && el.className !== 'vector-graphic') {
+                el.style.color = "#e2e8f0";
+            }
+        });
+
+    } else {
+        // =============================================================
+        // [TRANSFORM TO CRISP WHITE HIGHLIGHT (LIGHT MODE)]
+        // =============================================================
+        document.body.style.backgroundColor = "#ffffff";
+        document.body.style.color = "#0f172a"; // Midnight black base
+        
+        if (mainHeading) mainHeading.style.color = "#0f172a";
+
+        // Force layout frames into clean porcelain white panels
+        layoutBoxes.forEach(box => {
+            box.style.background = "#f8fafc";
+            box.style.borderColor = "#cbd5e1"; // Light gray boundary line
+        });
+
+        // Force white headings to turn midnight black so they don't vanish
+        subHeadings.forEach(h => {
+            // Protect your custom accent colors (like formula highlights or category chips)
+            if (h.style.color !== "rgb(0, 210, 211)" && h.style.color !== "rgb(255, 215, 0)" && h.style.color !== "rgb(255, 159, 67)") {
+                h.style.color = "#0f172a";
+            }
+        });
+
+        // Force generic paragraph/span strings into deep charcoal gray
+        descriptiveText.forEach(el => {
+            // Do not override navigation triggers or graphics
+            if (el.className !== 'dots-trigger' && el.className !== 'vector-graphic') {
+                el.style.color = "#334155";
+            }
+        });
+    }
+}
+// =====================================================================
+// 🤖 SECURE PRODUCTION-READY AI GATEWAY (UPDATED WITH PROTECTIONS)
+// =====================================================================
+async function executeUniversalAISolverCall() {
+    const inputField = document.getElementById("universal-solver-input");
+    const outputPanel = document.getElementById("universal-solver-output-panel");
+    
+    // 🛠️ Grab your action button dynamically to manage loading states
+    // Note: Ensure your HTML button has id="universal-solver-btn"
+    const actionBtn = document.getElementById("universal-solver-btn") || event?.target;
+    
+    if (!inputField || !inputField.value.trim()) {
+        alert("❌ Please type or paste a JEE question first!");
+        return;
+    }
+
+    const questionText = inputField.value.trim();
+
+    // 🛠️ Protect Credits: Disable inputs immediately to prevent spamming duplicate requests
+    if (actionBtn) {
+        actionBtn.disabled = true;
+        actionBtn.style.opacity = "0.5";
+        actionBtn.innerText = "Processing Matrix... ⏳";
+    }
+
+    // Reveal and prepare output panel container
+    if (outputPanel) {
+        outputPanel.style.display = "block";
+        outputPanel.innerHTML = `⏳ <i style="color: #a4b0be;">Connecting to AI Matrix... Calculating step-by-step pathways... (This may take up to 10 seconds)</i>`;
+        outputPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    try {
+        // CALL SECURE RELATIVE PATH (Perfectly masks your Google API Key)
+        const response = await fetch('/api/solve', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ questionText: questionText })
+        });
+
+        const data = await response.json();
+        
+        // 🛠️ Handle standard API level errors cleanly without breaking the interface
+        if (!response.ok) {
+            throw new Error(data.error || `Server responded with status code ${response.status}`);
+        }
+        
+        if (data.solution) {
+            // Render the step-by-step solution cleanly
+            outputPanel.innerHTML = `
+                <h4 style="margin: 0 0 8px 0; color: #2ed573; font-size: 13px; text-transform: uppercase;">🤖 AI Assistant Verified Solution:</h4>
+                <div style="color: #e2e8f0; font-size: 13px; white-space: pre-wrap; line-height: 1.6; font-family: sans-serif;">${data.solution}</div>
+            `;
+            
+            // Re-apply light-mode adjustments if the theme switcher is currently active
+            if (document.body.style.backgroundColor === "rgb(255, 255, 255)" || document.body.style.backgroundColor === "white") {
+                const solutionTextNode = outputPanel.querySelector('div');
+                if (solutionTextNode) solutionTextNode.style.color = "#334155";
+                outputPanel.style.backgroundColor = "#f8fafc";
+            }
+        } else {
+            throw new Error("Failed layout resolution call");
+        }
+
+    } catch (error) {
+        console.error("AI Gateway Failure:", error);
+        if (outputPanel) {
+            // 🛠️ Better, user-friendly error copy so they know *why* it stopped
+            if (error.message.includes("504") || error.message.toLowerCase().includes("timeout")) {
+                outputPanel.innerHTML = `<span style="color:#ff4757; font-size:12px; font-weight:bold;">⏱️ Solution Timeout: The JEE derivation took longer than Vercel's 10-second limit. Please make your question text more concise and try again!</span>`;
+            } else if (error.message.includes("429")) {
+                outputPanel.innerHTML = `<span style="color:#ff4757; font-size:12px; font-weight:bold;">⚡ Server Traffic Limit: Too many requests hitting the system. Please wait a minute before querying again.</span>`;
+            } else {
+                outputPanel.innerHTML = `<span style="color:#ff4757; font-size:12px; font-weight:bold;">❌ AI Pipeline Connection Error: ${error.message}</span>`;
+            }
+        }
+    } finally {
+        // 🛠️ ALWAYS reset the button state here so users can ask another question
+        if (actionBtn) {
+            actionBtn.disabled = false;
+            actionBtn.style.opacity = "1";
+            actionBtn.innerText = "Ask AI Solver ⚡";
+        }
+    }
+}
+            </script>
+
+</body>
+
+</html>

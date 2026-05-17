@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <h1>Instant IIT-JEE Maths Help & Smart Question Solver</h1>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEE Strategy Portal | International Medalist Network</title>
+    <style>
+        /* CORE THEME MATRIX */
+        body {
+            background-color: #0b0b14;
+            color: #e2e8f0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 25px;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .widget-box {
+            background: linear-gradient(145deg, #131324, #1b1b32);
+            border: 1px solid #2e2e4e;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            padding: 25px;
+            box-sizing: border-box;
+        }
+
+        /* 3-DOT STEALTH DRAWER */
+        .menu-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dots-trigger {
+            font-size: 32px;
+            color: #00d2d3;
+            cursor: pointer;
+            padding: 5px 10px;
+            user-select: none;
+        }
+
+        .horizontal-drawer {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #1b1b32;
+            border: 1px solid #2e2e4e;
+            border-radius: 8px;
+            padding: 10px;
+            white-space: nowrap;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .menu-wrapper:hover .horizontal-drawer {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .drawer-item {
+            color: #e2e8f0;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            text-decoration: none;
+        }
+
+        .drawer-item:hover {
+            background-color: #2e2e4e;
+        }
+
+        /* SHOWCASE ROTATOR PANELS */
+        .showcase-container {
+            position: relative;
+            height: 140px;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #0b0b14;
+            border-left: 4px solid #00d2d3;
+            margin-bottom: 30px;
+        }
+
+        .showcase-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .showcase-slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        /* PORTAL MATRICES (4 CIRCLES) */
+        .portal-grid {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .portal-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            text-decoration: none;
+            color: #e2e8f0;
+            width: 180px;
+            transition: transform 0.2s;
+        }
+
+        .portal-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .circle-frame {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #131324;
+            border: 3px solid #2e2e4e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portal-item:hover .circle-frame {
+            border-color: #00d2d3;
+            box-shadow: 0 0 20px rgba(0, 210, 211, 0.4);
+        }
+
+        .vector-graphic {
+            font-size: 42px;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= AUTHENTIC MATCHING HEADER ================= -->
+    <header style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin: 0 0 35px 0; padding: 0 0 15px 0; border-bottom: 1px solid #2e2e4e;">
+        <!-- Standard layout settings -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 🏆 THE TITLE: This is the blue link people click on Google. 
+         Keep it under 60 characters and put the main search term first! -->
+    <title>IIT-JEE Maths Help | AI Step-by-Step Question Solver</title>
+
+    <!-- 📝 THE DESCRIPTION: The snippet paragraph shown under your link on Google.
+         Keep it under 160 characters so it doesn't get cut off. -->
+    <meta name="description" content="Get instant IIT-JEE maths help. Paste your toughest Calculus, Algebra, or Coordinate Geometry questions for verified, step-by-step AI solutions.">
+
+    <!-- 🤖 THE ROBOTS INDEXER: Explicitly gives Google permission to show this page -->
+    <meta name="robots" content="index, follow">
+
+    <!-- 📱 SOCIAL MEDIA SHARING (Optional but highly recommended): 
+         This makes your site look incredibly professional when shared on WhatsApp, Telegram, or Reddit. -->
+    <meta property="og:title" content="IIT-JEE Maths Help & AI Question Solver">
+    <meta property="og:description" content="Solve your tough JEE Mains & Advanced math problems with an instant step-by-step AI tutor.">
+    <meta property="og:type" content="website>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                <div style="width: 75px; height: 75px; background: linear-gradient(135deg, #4d00ff, #00d2d3); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(77, 0, 255, 0.4); border: 2px solid #fff; box-sizing: border-box;">
+                    <span style="font-size: 10px; font-weight: bold; color: white; text-align: center; line-height: 1.2; padding: 3px; letter-spacing: 0.5px;">TRUST IS OUR MOTTO</span>
+                </div>
+                <div style="font-size: 10px; color: #a4b0be; margin-top: 6px; font-weight: bold; white-space: nowrap; letter-spacing: 0.3px;">
+                    Created by a group of International Medalists
+                </div>
+            </div>
+            <h1 style="font-size: 24px; color: #ffffff; margin: 0; font-weight: 800; max-width: 550px; line-height: 1.3;">
+                Welcome to the website crafted for the future <span style="color: #00d2d3;">JEE aspirants</span>.
+            </h1>
+        </div>
+
+        <!-- RE-ENGINEERED 4-CATEGORY OPTIONS MENU -->
+    <div class="menu-wrapper">
+    <div class="dots-trigger">⋮</div>
+    <div class="horizontal-drawer">
+        <a href="home.html" class="drawer-item">🏠 Home Gateway</a>
+        <a href="index.html" class="drawer-item">📐 Normal Study Deck</a>
+        <span class="drawer-item" onclick="toggleThemeMode()" style="cursor: pointer; display: block;">🌓 Theme Switch</span>
+    </div>
+</div>
+    </header>
+
+    <!-- ================= MAIN CORE WINDOW CONTAINER ================= -->
+    <main class="widget-box">
+        
+        <!-- AUTOMATED SLIDING PANELS: TARGET CREDENTIALS SUITE -->
+        <h3 style="color: #a4b0be; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; margin: 0 0 10px 0;">🌍 Hall of Global Honors & Heritage</h3>
+        <div class="showcase-container">
+            <!-- SLIDE 1: LEAD CODER DATA -->
+            <div class="showcase-slide active">
+                <h2 style="margin: 0 0 5px 0; color: #ffd700; font-size: 18px;">🥇 Lead Coder — Command Network Profile</h2>
+                <p style="margin: 0; color: #e2e8f0; font-size: 13px; line-height: 1.4;">
+                    Decorated with the **SASMO Gold Medal** holding an absolute **International Rank 1**, backed by an unblemished execution file as an **ISOCSEA Perfect Scorer**.
+                </p>
+            </div>
+            <!-- SLIDE 2: SECOND IN HEAD DATA -->
+            <div class="showcase-slide">
+                <h2 style="margin: 0 0 5px 0; color: #00d2d3; font-size: 18px;">🥈 Second-in-Head — Strategic Execution Panel</h2>
+                <p style="margin: 0; color: #e2e8f0; font-size: 13px; line-height: 1.4;">
+                    Recognized globally on the podium with an **IMOCSEA Silver Medal** and demonstrating absolute national mastery with **TALLENTEX All India Rank (AIR) 56**.
+                </p>
+            </div>
+            <!-- SLIDE 3: CORE PLATFORM FOCUS -->
+            <div class="showcase-slide">
+                <h2 style="margin: 0 0 5px 0; color: #2ed573; font-size: 18px;">🎓 Built Differently Than the Factories</h2>
+                <p style="margin: 0; color: #e2e8f0; font-size: 13px; line-height: 1.4;">
+                    We don't sell unguided, bulk textbook lectures. We pack world-class competition metrics, dynamic shortcuts, and strategic data layers right into your browser canvas.
+                </p>
+            </div>
+        </div>
+
+        <!-- PORTAL MATRICES BLOCK (THE 4 INTERIOR CONNECTIONS) -->
+        <h3 style="color: #ffffff; font-size: 16px; margin: 0 0 20px 0; border-bottom: 1px solid #2e2e4e; padding-bottom: 8px;">🔮 Select Training Terminal Gateway</h3>
+        
+        <div class="portal-grid">
+            
+            <!-- CIRCLE 1: PEER RELATIVITY ENGINE -->
+            <a href="index.html" class="portal-item">
+                <div class="circle-frame">
+                    <span class="vector-graphic">👥</span>
+                </div>
+                <strong style="font-size: 14px; margin-bottom: 4px; color: #00d2d3;">Peer Relativity</strong>
+                <span style="font-size: 11px; color: #a4b0be; line-height: 1.3;">Compare live score metrics directly against active national aspirants.</span>
+            </a>
+
+            <!-- CIRCLE 2: STRATEGY ENGINE -->
+            <a href="index.html" class="portal-item">
+                <div class="circle-frame">
+                    <span class="vector-graphic">🎯</span>
+                </div>
+                <strong style="font-size: 14px; margin-bottom: 4px; color: #ff9f43;">Tactical Shortcuts</strong>
+                <span style="font-size: 11px; color: #a4b0be; line-height: 1.3;">Deploy optimized formula hacks engineered by global Olympiad veterans.</span>
+            </a>
+
+            <!-- CIRCLE 3: QUIZ CORE RUNNER -->
+            <a href="index.html" class="portal-item">
+                <div class="circle-frame">
+                    <span class="vector-graphic">🧠</span>
+                </div>
+                <strong style="font-size: 14px; margin-bottom: 4px; color: #ff4757;">Custom Training</strong>
+                <span style="font-size: 11px; color: #a4b0be; line-height: 1.3;">Trigger variable count question streams across standard subjects.</span>
+            </a>
+
+            <!-- CIRCLE 4: AI SOLVER CORE -->
+            <a href="index.html" class="portal-item">
+                <div class="circle-frame">
+                    <span class="vector-graphic">🔮</span>
+                </div>
+                <strong style="font-size: 14px; margin-bottom: 4px; color: #9b59b6;">AI Resolution Core</strong>
+                <span style="font-size: 11px; color: #a4b0be; line-height: 1.3;">Submit direct variable input profiles to the backend logic network.</span>
+            </a>
+<!-- ================= LEADERSHIP MONITOR MONITOR SUITE ================= -->
+        <h3 style="color: #ffffff; font-size: 16px; margin: 35px 0 15px 0; border-bottom: 1px solid #2e2e4e; padding-bottom: 8px;">📟 Core Leadership Monitor Insights</h3>
+        
+        <div style="background: #0b0b14; border: 1px solid #2e2e4e; border-radius: 8px; padding: 20px; min-height: 90px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center;">
+            
+            <!-- MONITOR SCREEN 1: LEAD CODER -->
+            <div class="leadership-quote active-quote" id="quote-lead">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                    <span style="color: #ffd700; font-size: 12px; font-weight: bold; background: rgba(255,215,0,0.1); padding: 2px 8px; border-radius: 4px; border: 1px solid #ffd700;">🗣️ LEAD CODER</span>
+                    <span style="font-size: 11px; color: #7f8c8d;">Transmission Live...</span>
+                </div>
+                <p style="margin: 0; font-size: 14px; font-style: italic; line-height: 1.5; color: #e2e8f0;">
+                    "We believe that no child is bad at maths, just with a bit of interest and competitiveness every child can be, if not the best, then better than before."
+                </p>
+            </div>
+
+            <!-- MONITOR SCREEN 2: SECOND IN HEAD -->
+            <div class="leadership-quote" id="quote-second" style="display: none;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                    <span style="color: #00d2d3; font-size: 12px; font-weight: bold; background: rgba(0,210,211,0.1); padding: 2px 8px; border-radius: 4px; border: 1px solid #00d2d3;">🗣️ SECOND-IN-HEAD</span>
+                    <span style="font-size: 11px; color: #7f8c8d;">Transmission Live...</span>
+                </div>
+                <p style="margin: 0; font-size: 14px; font-style: italic; line-height: 1.5; color: #e2e8f0;">
+                    "I agree that every child is born equal with the same amount of capacity but the ways of intake are different, thus we have also added these shortcuts."
+                </p>
+            </div>
+
+            <!-- MANUAL MONITOR FLIP CONTROLS -->
+            <div style="display: flex; gap: 8px; margin-top: 15px; justify-content: flex-end;">
+                <button onclick="switchMonitorChannel(1)" style="background: #2e2e4e; color: #fff; border: 1px solid #444; border-radius: 4px; padding: 4px 10px; font-size: 11px; cursor: pointer; font-weight: bold;">CH 1: Lead Coder</button>
+                <button onclick="switchMonitorChannel(2)" style="background: #2e2e4e; color: #fff; border: 1px solid #444; border-radius: 4px; padding: 4px 10px; font-size: 11px; cursor: pointer; font-weight: bold;">CH 2: Second-in-Head</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- PREMIUM GATEWAY DIALOG MODAL LAYOUT -->
+    <div id="premium-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 999; justify-content: center; align-items: center;">
+        <div class="widget-box" style="background: #1e1e2f; padding: 30px; border-radius: 12px; max-width: 450px; width: 90%; border: 2px solid #ffd700; text-align: center; box-shadow: 0 0 30px rgba(255,215,0,0.2);">
+            <h2 style="color: #ffd700; margin-top: 0;">🎉 Premium Gateway</h2>
+            <p style="font-size: 15px; line-height: 1.5; color: #e2e8f0;">Access unrestricted deep metric boards and continuous AI generations.</p>
+            <button onclick="closePremiumModal()" style="background: linear-gradient(135deg, #ffd700, #ff9f43); color: #0f0f1a; padding: 12px 20px; border: none; border-radius: 6px; font-weight: bold; width: 100%; cursor: pointer;">Upgrade via Terminal Gateway</button>
+            <button onclick="closePremiumModal()" style="background: transparent; color: #a4b0be; border: none; margin-top: 15px; font-size: 12px; text-decoration: underline; cursor: pointer;">Return to Dashboard</button>
+        </div>
+    </div>
+
+    <script>
+        // BACKEND SLIDER AUTOMATION CONTROLLER
+        let slides = document.querySelectorAll('.showcase-slide');
+        let currentSlideIndex = 0;
+
+        function advanceSlideShow() {
+            slides[currentSlideIndex].classList.remove('active');
+            currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+            slides[currentSlideIndex].classList.add('active');
+        }
+        setInterval(advanceSlideShow, 5000); // Transitions automatically every 5 seconds
+// INDEPENDENT MONITOR SYSTEM CHANNEL SWITCHER
+        function switchMonitorChannel(channelNum) {
+            let leadBox = document.getElementById("quote-lead");
+            let secondBox = document.getElementById("quote-second");
+            
+            if (channelNum === 1) {
+                leadBox.style.display = "block";
+                secondBox.style.display = "none";
+            } else if (channelNum === 2) {
+                leadBox.style.display = "none";
+                secondBox.style.display = "block";
+            }
+        }
+
+        // Automated slow monitor channel rotation sequence (Every 7 seconds)
+        let activeChannel = 1;
+        setInterval(function() {
+            activeChannel = activeChannel === 1 ? 2 : 1;
+            switchMonitorChannel(activeChannel);
+        }, 7000);
+        // HELPER CONTROL UTILITIES
+        function openPremiumModal() { document.getElementById("premium-modal").style.display = "flex"; }
+        function closePremiumModal() { document.getElementById("premium-modal").style.display = "none"; }
+        function toggleThemeMode() {
+    // Check current background color state
+    let currentBg = document.body.style.backgroundColor || "";
+    
+    // Select all layout matrices, text selectors, and sliding showcase slots
+    let mainCard = document.querySelector('.widget-box');
+    let mainHeading = document.querySelector('h1');
+    let normalTextElements = document.querySelectorAll('p, span, label, strong, div');
+    let slides = document.querySelectorAll('.showcase-slide');
+    let quotes = document.querySelectorAll('.leadership-quote p');
+
+    if (currentBg === "rgb(255, 255, 255)" || currentBg === "white") {
+        // ================= RESET TO DARK INDUSTRIAL TERMINAL =================
+        document.body.style.backgroundColor = "#0b0b14";
+        document.body.style.color = "#e2e8f0";
+        
+        if (mainHeading) mainHeading.style.color = "#ffffff";
+
+        // Restore the main core layout frame to deep space matrix
+        if (mainCard) {
+            mainCard.style.background = "linear-gradient(145deg, #131324, #1b1b32)";
+            mainCard.style.borderColor = "#2e2e4e";
+            mainCard.style.color = "#e2e8f0";
+            
+            // Re-brighten inner category titles
+            let innerTitles = mainCard.querySelectorAll('h2, h3');
+            innerTitles.forEach(t => {
+                if (!t.style.color.includes('rgb')) {
+                    t.style.color = "#ffffff";
+                }
+            });
+        }
+
+        // Return running slide summaries back to bright text
+        slides.forEach(slide => {
+            slide.style.color = "#e2e8f0";
+        });
+
+        // Return leadership transmission logs to white
+        quotes.forEach(q => {
+            q.style.color = "#e2e8f0";
+        });
+
+        // Set baseline text elements to light grey balance
+        normalTextElements.forEach(el => {
+            if (el.style.color === "rgb(51, 65, 85)" || el.style.color === "slate" || el.style.color === "rgb(15, 23, 42)") {
+                // Safeguard distinct accents like your gold and teal title texts
+                if (el.style.color !== "rgb(255, 215, 0)" && el.style.color !== "rgb(0, 210, 211)") {
+                    el.style.color = "#e2e8f0";
+                }
+            }
+        });
+
+    } else {
+        // ================= TRANSFORM TO CRISP WHITE HIGHLIGHT =================
+        document.body.style.backgroundColor = "#ffffff";
+        document.body.style.color = "#0f172a"; // Rich midnight black
+        
+        if (mainHeading) mainHeading.style.color = "#0f172a";
+
+        // Turn your entire core layout card window into pristine clean porcelain
+        if (mainCard) {
+            mainCard.style.background = "#f8fafc";
+            mainCard.style.borderColor = "#cbd5e1";
+            mainCard.style.color = "#334155";
+            
+            // Force general white title headings to read cleanly in black
+            let innerTitles = mainCard.querySelectorAll('h2, h3');
+            innerTitles.forEach(t => {
+                let colorCheck = t.style.color;
+                // Leave your distinct prize track accent colors (Teal, Gold, Green) untouched
+                if (colorCheck !== "rgb(155, 89, 182)" && colorCheck !== "rgb(0, 210, 211)" && colorCheck !== "rgb(255, 215, 0)" && colorCheck !== "rgb(46, 213, 115)") {
+                    t.style.color = "#0f172a";
+                }
+            });
+        }
+
+        // Force running slide text cards to use highly legible slate
+        slides.forEach(slide => {
+            slide.style.color = "#334155";
+        });
+
+        // Force transmission leadership monitor strings to deep charcoal black
+        quotes.forEach(q => {
+            q.style.color = "#1e293b";
+        });
+
+        // Turn descriptive circle items and sub-labels into deep readable values
+        normalTextElements.forEach(el => {
+            let colorCheck = el.style.color;
+            if (!colorCheck.includes('rgb') && el.className !== 'dots-trigger' && el.className !== 'vector-graphic') {
+                el.style.color = "#334155";
+            }
+        });
+    }
+}
+    </script>
+</body>
+</html>
