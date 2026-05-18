@@ -19,38 +19,45 @@ export default async function handler(req, res) {
             return res.status(500).json({ error: 'Server key allocation mapping error.' });
         }
 
-       // Tell the AI exactly how to format the text so it skips LaTeX and formatting blocks
         const structuredPrompt = `You are an expert IIT-JEE exam tutor. Provide a clear, step-by-step, mathematically accurate solution for this question. Keep it concise, professional, and easy to read. 
 
-CRITICAL FORMATTING INSTRUCTIONS:
-- Do NOT use dollar signs ($ or $$) anywhere in your response. 
-- Do NOT use LaTeX commands like \\boxed{}, \\frac{}, or formatting symbols.
-- Use plain text and basic keyboard symbols only (like +, -, =, /, *, and standard numbers).
-- Use normal text layout for fractions, equations, and steps.
+CRITICAL INSTRUCTIONS:
+- NEVER use dollar signs ($ or $$) anywhere. Use plain numbers.
+- NEVER use LaTeX math notation or codes like \\boxed{...}, \\frac{...}, or \\cdot.
+- Use basic keyboard symbols only (e.g., +, -, =, /, *). For fractions, use simple text layouts like (x/y).
+- Format final answers simply as: "The final answer is: 2" without any boxes or brackets.
 
 Question: ${questionText}`;
+        
         // Handshake directly with Google's active stable endpoint
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify({
                 contents: [{ parts: [{ text: structuredPrompt }] }]
-            })
+            }),
+            // Forces Vercel to bypass stale edge-network caching for this functional module
+            cache: "no-store" 
         });
 
         // Parse the incoming JSON payload string into data object structures
         const data = await response.json();
-
-        // Safely extract the text using optional chaining (?.) to prevent crashes
-        const aiResponseText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        let aiResponseText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
         if (aiResponseText) {
+            // 🔥 FAIL-SAFE SHIELD: Strip out any accidental LaTeX formatting if the AI slips up
+            aiResponseText = aiResponseText
+                .replace(/\$\$/g, '')               // Removes double dollar signs ($$)
+                .replace(/\$/g, '')                 // Removes single dollar signs ($)
+                .replace(/\\boxed\{([\s\S]*?)\}/g, '$1') // Changes \boxed{2} into just 2
+                .replace(/\\mathbf\{([\s\S]*?)\}/g, '$1') // Cleans up bold text blocks
+                .replace(/\\text\{([\s\S]*?)\}/g, '$1');   // Cleans up raw text blocks
+
             return res.status(200).json({ solution: aiResponseText });
         } else {
-            // Print the raw layout from Google into your Vercel system logs for live inspection
             console.error("Gemini API structural layout mismatch. Raw data received:", JSON.stringify(data));
-            
-            // Extract the deep system error text if Google passed an explicit fault flag
             const googleError = data?.error?.message || 'Invalid data return layout from structural models.';
             return res.status(500).json({ error: googleError });
         }
