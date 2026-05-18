@@ -30,22 +30,25 @@ export default async function handler(req, res) {
             })
         });
 
-    // Safely extract the text using optional chaining (?.) to prevent crashes
-    const aiResponseText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        // 🔥 THE FIX: Actually read and parse the incoming JSON data from Google!
+        const data = await response.json();
 
-    if (aiResponseText) {
-        return res.status(200).json({ solution: aiResponseText });
-    } else {
-        // If the expected structure is missing, print the RAW response from Google to your Vercel logs so we can see it!
-        console.error("Gemini API structural layout mismatch. Raw data received:", JSON.stringify(data));
-        
-        // Check if Google sent an error message inside the payload
-        const googleError = data?.error?.message || 'Invalid data return layout from structural models.';
-        return res.status(500).json({ error: googleError });
+        // Safely extract the text using optional chaining (?.) to prevent crashes
+        const aiResponseText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (aiResponseText) {
+            return res.status(200).json({ solution: aiResponseText });
+        } else {
+            // If the expected structure is missing, print the RAW response from Google to your Vercel logs so we can see it!
+            console.error("Gemini API structural layout mismatch. Raw data received:", JSON.stringify(data));
+            
+            // Check if Google sent an error message inside the payload
+            const googleError = data?.error?.message || 'Invalid data return layout from structural models.';
+            return res.status(500).json({ error: googleError });
+        }
+
+    } catch (error) {
+        console.error("Execution Catch Block Error:", error);
+        return res.status(500).json({ error: 'Internal Server Execution Gateway Error' });
     }
-
-} catch (error) {
-    console.error("Execution Catch Block Error:", error);
-    return res.status(500).json({ error: 'Internal Server Execution Gateway Error' });
-}
 }
