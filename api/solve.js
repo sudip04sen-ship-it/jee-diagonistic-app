@@ -30,17 +30,22 @@ export default async function handler(req, res) {
             })
         });
 
-        const data = await response.json();
-        
-        if (data.candidates && data.candidates[0].content.parts[0].text) {
-            const aiResponseText = data.candidates[0].content.parts[0].text;
-            return res.status(200).json({ solution: aiResponseText });
-        } else {
-            return res.status(500).json({ error: 'Invalid data return layout from structural models.' });
-        }
+    // Safely extract the text using optional chaining (?.) to prevent crashes
+    const aiResponseText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ error: 'Internal Server Execution Gateway Error' });
+    if (aiResponseText) {
+        return res.status(200).json({ solution: aiResponseText });
+    } else {
+        // If the expected structure is missing, print the RAW response from Google to your Vercel logs so we can see it!
+        console.error("Gemini API structural layout mismatch. Raw data received:", JSON.stringify(data));
+        
+        // Check if Google sent an error message inside the payload
+        const googleError = data?.error?.message || 'Invalid data return layout from structural models.';
+        return res.status(500).json({ error: googleError });
     }
+
+} catch (error) {
+    console.error("Execution Catch Block Error:", error);
+    return res.status(500).json({ error: 'Internal Server Execution Gateway Error' });
+}
 }
