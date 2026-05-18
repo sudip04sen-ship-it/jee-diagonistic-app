@@ -21,16 +21,16 @@ export default async function handler(req, res) {
 
         const structuredPrompt = `You are an expert IIT-JEE exam tutor. Provide a clear, step-by-step, mathematically accurate solution for this question. Keep it concise, professional, and easy to read. Question: ${questionText}`;
         
-        // Handshake directly with Google's free Tier 1.5 Flash framework
-        // TO THIS:
-const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+        // Handshake directly with Google's active stable endpoint
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+            method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 contents: [{ parts: [{ text: structuredPrompt }] }]
             })
         });
 
-        // 🔥 THE FIX: Actually read and parse the incoming JSON data from Google!
+        // Parse the incoming JSON payload string into data object structures
         const data = await response.json();
 
         // Safely extract the text using optional chaining (?.) to prevent crashes
@@ -39,10 +39,10 @@ const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/m
         if (aiResponseText) {
             return res.status(200).json({ solution: aiResponseText });
         } else {
-            // If the expected structure is missing, print the RAW response from Google to your Vercel logs so we can see it!
+            // Print the raw layout from Google into your Vercel system logs for live inspection
             console.error("Gemini API structural layout mismatch. Raw data received:", JSON.stringify(data));
             
-            // Check if Google sent an error message inside the payload
+            // Extract the deep system error text if Google passed an explicit fault flag
             const googleError = data?.error?.message || 'Invalid data return layout from structural models.';
             return res.status(500).json({ error: googleError });
         }
