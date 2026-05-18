@@ -19,8 +19,16 @@ export default async function handler(req, res) {
             return res.status(500).json({ error: 'Server key allocation mapping error.' });
         }
 
-        const structuredPrompt = `You are an expert IIT-JEE exam tutor. Provide a clear, step-by-step, mathematically accurate solution for this question. Keep it concise, professional, and easy to read. Question: ${questionText}`;
-        
+       // Tell the AI exactly how to format the text so it skips LaTeX and formatting blocks
+        const structuredPrompt = `You are an expert IIT-JEE exam tutor. Provide a clear, step-by-step, mathematically accurate solution for this question. Keep it concise, professional, and easy to read. 
+
+CRITICAL FORMATTING INSTRUCTIONS:
+- Do NOT use dollar signs ($ or $$) anywhere in your response. 
+- Do NOT use LaTeX commands like \\boxed{}, \\frac{}, or formatting symbols.
+- Use plain text and basic keyboard symbols only (like +, -, =, /, *, and standard numbers).
+- Use normal text layout for fractions, equations, and steps.
+
+Question: ${questionText}`;
         // Handshake directly with Google's active stable endpoint
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
             method: "POST",
