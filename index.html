@@ -672,7 +672,7 @@ window.addXpReward = function(amount = 50) {
 };
 
 // =====================================================================
-// 🎬 INITIALIZATION SEQUENCE ON BOOTUP (FIXED & LIVE)
+// 🎬 INITIALIZATION SEQUENCE ON BOOTUP (CLEAN COLD-LOAD)
 // =====================================================================
 let currentXPValue = parseInt(localStorage.getItem("totalUserXP") || "0", 10);
 let currentUserNameString = localStorage.getItem("currentUserName") || "Aspirant";
@@ -680,15 +680,11 @@ let currentUserNameString = localStorage.getItem("currentUserName") || "Aspirant
 let displayXpNode = document.getElementById("user-leaderboard-xp");
 if (displayXpNode) displayXpNode.innerText = currentXPValue;
 
-// If they have unsynced scores when returning to the dashboard, sync it
-if (currentXPValue > 0) {
-    syncUserScoreToCloud(currentUserNameString, currentXPValue);
-} else {
-    renderNationalLeaderboard();
-}
+// 🔥 FIX: Just pull existing clean scores from the cloud on page refresh!
+// Do not blindly fire a syncUserScoreToCloud() request on every reload.
+renderNationalLeaderboard();
 
-// 🔄 LIVE BACKGROUND REFRESH: 
-// Automatically fetch fresh ranks from the cloud every 10 seconds without refreshing the page!
+// 🔄 LIVE BACKGROUND REFRESH: Fetch ranks fluidly every 10 seconds
 setInterval(renderNationalLeaderboard, 10000);
 
         // Interface helper bindings
