@@ -672,7 +672,7 @@ window.addXpReward = function(amount = 50) {
 };
 
 // =====================================================================
-// 🎬 INITIALIZATION SEQUENCE ON BOOTUP (CLEAN COLD-LOAD)
+// 🎬 INITIALIZATION SEQUENCE ON BOOTUP (AUTO-SYNC SAFETY NET)
 // =====================================================================
 let currentXPValue = parseInt(localStorage.getItem("totalUserXP") || "0", 10);
 let currentUserNameString = localStorage.getItem("currentUserName") || "Aspirant";
@@ -680,9 +680,14 @@ let currentUserNameString = localStorage.getItem("currentUserName") || "Aspirant
 let displayXpNode = document.getElementById("user-leaderboard-xp");
 if (displayXpNode) displayXpNode.innerText = currentXPValue;
 
-// 🔥 FIX: Just pull existing clean scores from the cloud on page refresh!
-// Do not blindly fire a syncUserScoreToCloud() request on every reload.
-renderNationalLeaderboard();
+// 🔥 SAFETY NET: If they have any XP locally, make sure it's saved in the cloud!
+// Because of our backend 'merge-duplicates' fix, this will NOT create duplicates.
+if (currentXPValue > 0) {
+    console.log("Syncing user baseline profile state to cloud matrix...");
+    syncUserScoreToCloud(currentUserNameString, currentXPValue);
+} else {
+    renderNationalLeaderboard();
+}
 
 // 🔄 LIVE BACKGROUND REFRESH: Fetch ranks fluidly every 10 seconds
 setInterval(renderNationalLeaderboard, 10000);
