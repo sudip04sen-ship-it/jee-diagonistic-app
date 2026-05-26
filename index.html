@@ -664,6 +664,27 @@ if (!localStorage.getItem("currentUserName")) {
         localStorage.setItem("currentUserName", inputName.trim());
     }
 }
+// 🔥 GLOBAL FUNCTION: Call this whenever a user solves a question correctly!
+window.addXpReward = function(amount = 100) {
+    // 1. Pull current score from local memory safely
+    let latestXP = parseInt(localStorage.getItem("totalUserXP") || "0", 10);
+    let currentUsername = localStorage.getItem("currentUserName") || "Aspirant";
+
+    // 2. Add the new points
+    latestXP += amount;
+
+    // 3. Save the new score back to local storage
+    localStorage.setItem("totalUserXP", latestXP);
+
+    // 4. Update the text on the user screen instantly
+    let displayXpNode = document.getElementById("user-leaderboard-xp");
+    if (displayXpNode) displayXpNode.innerText = latestXP;
+
+    console.log(`Earned +${amount} XP! New Total: ${latestXP}. Syncing to cloud...`);
+
+    // 5. Fire the secure pipeline straight to Supabase!
+    syncUserScoreToCloud(currentUsername, latestXP);
+};
 
 // =====================================================================
 // 🎬 INITIALIZATION SEQUENCE ON BOOTUP (FIXED)
