@@ -4,23 +4,6 @@
     <link rel="stylesheet" href="style1.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Study Deck</title>
-    <link rel="stylesheet" href="style1.css">
-    <!-- This script automatically converts text inside $ signs into gorgeous math formulas! -->
-<<!-- 1. Configure MathJax to recognize single dollar signs -->
-<script>
-    window.MathJax = {
-        tex: {
-            inlineMath: [['$', '$']],
-            displayMath: [['$$', '$$']]
-        }
-    };
-</script>
-
-<!-- 2. Load the actual MathJax Engine -->
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exam Simulation Terminal</title>
     <style>
         body { background-color: #0f0f1a; color: #fff; font-family: 'Segoe UI', sans-serif; padding: 30px; margin: 0; }
@@ -36,11 +19,20 @@
         .results-screen { text-align: center; display: none; }
         .premium-blur { filter: blur(4px); pointer-events: none; user-select: none; }
     </style>
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
 </head>
 <body>
 
     <div class="quiz-container">
-        <!-- LIVE GAMEPLAY MODE -->
         <div id="quiz-gameplay">
             <div class="header-meta">
                 <span id="progress-text" style="font-weight: bold; color: #a4b0be;">Question 1 of X</span>
@@ -61,7 +53,6 @@
             <div style="clear: both;"></div>
         </div>
 
-        <!-- END GAME SCORING MATRIX -->
         <div id="quiz-results" class="results-screen">
             <h1 style="color: #2ed573; margin-top: 0;">💥 Simulation Complete!</h1>
             <p style="font-size: 20px;">Your Score: <span id="final-score" style="font-weight: bold; color: #ff9f43;">0/0</span></p>
@@ -71,165 +62,184 @@
     </div>
 
     <script>
-       // 📦 EXPANDED QUESTION BANK
-const masterQuestionBank = [
-    { id: 1, topic: "quadratic-equations", level: "easy", q: "Find the roots of the equation: $x^2 - 5x + 6 = 0$.", options: ["x = 2, 3", "x = 1, 5", "x = -2, -3", "x = 0, 6"], answer: 0, exp: "Factoring gives $(x-2)(x-3) = 0$, so $x = 2, 3$." },
-    { id: 2, topic: "quadratic-equations", level: "easy", q: "What is the product of the roots of the equation $x^2 - 7x + 12 = 0$?", options: ["7", "12", "-7", "-12"], answer: 1, exp: "For $ax^2+bx+c=0$, the product of roots is $c/a$. Here, $12/1 = 12$." },
-    { id: 3, topic: "quadratic-equations", level: "easy", q: "What is the sum of the roots of the equation $x^2 - 9x + 20 = 0$?", options: ["9", "-9", "20", "-20"], answer: 0, exp: "The sum of roots is $-b/a$. Here, $-(-9)/1 = 9$." },
-    { id: 4, topic: "quadratic-equations", level: "easy", q: "If one root of $x^2 - 5x + k = 0$ is 2, find the value of k.", options: ["5", "6", "2", "3"], answer: 1, exp: "Substitute $x=2$: $(2)^2 - 5(2) + k = 0 \\rightarrow 4 - 10 + k = 0 \\rightarrow k = 6$." },
-    { id: 5, topic: "quadratic-equations", level: "easy", q: "Find the discriminant of the quadratic equation $x^2 + 4x + 4 = 0$.", options: ["16", "4", "0", "-16"], answer: 2, exp: "$D = b^2 - 4ac = 4^2 - 4(1)(4) = 16 - 16 = 0$." }
-];
+        // 📦 EXPANDED QUESTION BANK
+        const masterQuestionBank = [
+            { id: 1, topic: "quadratic-equations", level: "easy", q: "Find the roots of the equation: $x^2 - 5x + 6 = 0$.", options: ["x = 2, 3", "x = 1, 5", "x = -2, -3", "x = 0, 6"], answer: 0, exp: "Factoring gives $(x-2)(x-3) = 0$, so $x = 2, 3$." },
+            { id: 2, topic: "quadratic-equations", level: "easy", q: "What is the product of the roots of the equation $x^2 - 7x + 12 = 0$?", options: ["7", "12", "-7", "-12"], answer: 1, exp: "For $ax^2+bx+c=0$, the product of roots is $c/a$. Here, $12/1 = 12$." },
+            { id: 3, topic: "quadratic-equations", level: "easy", q: "What is the sum of the roots of the equation $x^2 - 9x + 20 = 0$?", options: ["9", "-9", "20", "-20"], answer: 0, exp: "The sum of roots is $-b/a$. Here, $-(-9)/1 = 9$." },
+            { id: 4, topic: "quadratic-equations", level: "easy", q: "If one root of $x^2 - 5x + k = 0$ is 2, find the value of k.", options: ["5", "6", "2", "3"], answer: 1, exp: "Substitute $x=2$: $(2)^2 - 5(2) + k = 0 \\rightarrow 4 - 10 + k = 0 \\rightarrow k = 6$." },
+            { id: 5, topic: "quadratic-equations", level: "easy", q: "Find the discriminant of the quadratic equation $x^2 + 4x + 4 = 0$.", options: ["16", "4", "0", "-16"], answer: 2, exp: "$D = b^2 - 4ac = 4^2 - 4(1)(4) = 16 - 16 = 0$." }
+        ];
 
-// Parse parameters carefully from URL query strings
-const urlParams = new URLSearchParams(window.location.search);
-const activeTopic = urlParams.get('topic') || 'quadratic-equations';
-const activeLevel = urlParams.get('level') || 'easy';
-const maxQuestionsRequested = parseInt(urlParams.get('qty')) || 3;
-const timeLimitMinutes = parseInt(urlParams.get('time')) || 2;
+        // Parse parameters carefully from URL query strings
+        const urlParams = new URLSearchParams(window.location.search);
+        const activeTopic = urlParams.get('topic') || 'quadratic-equations';
+        const activeLevel = urlParams.get('level') || 'easy';
+        const maxQuestionsRequested = parseInt(urlParams.get('qty')) || 3;
+        const timeLimitMinutes = parseInt(urlParams.get('time')) || 2;
 
-let activeQuizPool = [];
-let currentQuestionIdx = 0;
-let scoreCounter = 0;
-let countdownInterval;
-let totalTimeSeconds = maxQuestionsRequested * timeLimitMinutes * 60;
+        let activeQuizPool = [];
+        let currentQuestionIdx = 0;
+        let scoreCounter = 0;
+        let countdownInterval;
+        let totalTimeSeconds = maxQuestionsRequested * timeLimitMinutes * 60;
 
-const userIsPremium = localStorage.getItem("isPremium") === "true";
+        const userIsPremium = localStorage.getItem("isPremium") === "true";
 
-// Automatically boot up the setup process
-buildAndShuffleQuizPool();
+        // Automatically boot up the setup process
+        buildAndShuffleQuizPool();
 
-function buildAndShuffleQuizPool() {
-    // 🎯 Filter matching parameters
-    activeQuizPool = masterQuestionBank.filter(item => item.topic === activeTopic && item.level === activeLevel);
-    
-    // 🛡️ Error-Proof Fallback: If no match, grab whatever matches the topic ignoring difficulty
-    if (activeQuizPool.length === 0) {
-        activeQuizPool = masterQuestionBank.filter(item => item.topic === activeTopic);
-    }
-    
-    // 🛡️ Ultimate Fallback: If still empty, just load all available questions so it never crashes!
-    if (activeQuizPool.length === 0) {
-        activeQuizPool = [...masterQuestionBank];
-    }
+        function buildAndShuffleQuizPool() {
+            activeQuizPool = masterQuestionBank.filter(item => item.topic === activeTopic && item.level === activeLevel);
+            
+            if (activeQuizPool.length === 0) {
+                activeQuizPool = masterQuestionBank.filter(item => item.topic === activeTopic);
+            }
+            
+            if (activeQuizPool.length === 0) {
+                activeQuizPool = [...masterQuestionBank];
+            }
 
-    // Shuffling math array randomly
-    activeQuizPool.sort(() => Math.random() - 0.5);
+            activeQuizPool.sort(() => Math.random() - 0.5);
 
-    // Limit pool length based on user setup input box
-    if (activeQuizPool.length > maxQuestionsRequested) {
-        activeQuizPool = activeQuizPool.slice(0, maxQuestionsRequested);
-    }
+            if (activeQuizPool.length > maxQuestionsRequested) {
+                activeQuizPool = activeQuizPool.slice(0, maxQuestionsRequested);
+            }
 
-    startTimerCountdown();
-    renderQuestion();
-}
-
-function startTimerCountdown() {
-    clearInterval(countdownInterval); // Clear any ghost intervals running
-    countdownInterval = setInterval(() => {
-        if (totalTimeSeconds <= 0) {
-            clearInterval(countdownInterval);
-            terminateSimulation();
-        } else {
-            totalTimeSeconds--;
-            let displayMins = Math.floor(totalTimeSeconds / 60);
-            let displaySecs = totalTimeSeconds % 60;
-            document.getElementById("game-clock").innerText = 
-                `${displayMins.toString().padStart(2,'0')}:${displaySecs.toString().padStart(2,'0')}`;
+            startTimerCountdown();
+            renderQuestion();
         }
-    }, 1000);
-}
 
-function renderQuestion() {
-    document.getElementById("explanation-wrapper").style.display = "none";
-    document.getElementById("next-button").style.display = "none";
-    
-    let currentItem = activeQuizPool[currentQuestionIdx];
-    document.getElementById("progress-text").innerText = `Question ${currentQuestionIdx + 1} of ${activeQuizPool.length}`;
-    document.getElementById("question-text").innerText = currentItem.q;
+        function startTimerCountdown() {
+            clearInterval(countdownInterval);
+            countdownInterval = setInterval(() => {
+                if (totalTimeSeconds <= 0) {
+                    clearInterval(countdownInterval);
+                    terminateSimulation();
+                } else {
+                    totalTimeSeconds--;
+                    let displayMins = Math.floor(totalTimeSeconds / 60);
+                    let displaySecs = totalTimeSeconds % 60;
+                    document.getElementById("game-clock").innerText = 
+                        `${displayMins.toString().padStart(2,'0')}:${displaySecs.toString().padStart(2,'0')}`;
+                }
+            }, 1000);
+        }
 
-    let optionsContainer = document.getElementById("options-container");
-    optionsContainer.innerHTML = "";
+        function renderQuestion() {
+            document.getElementById("explanation-wrapper").style.display = "none";
+            document.getElementById("next-button").style.display = "none";
+            
+            let currentItem = activeQuizPool[currentQuestionIdx];
+            document.getElementById("progress-text").innerText = `Question ${currentQuestionIdx + 1} of ${activeQuizPool.length}`;
+            document.getElementById("question-text").innerText = currentItem.q;
 
-    currentItem.options.forEach((optText, index) => {
-        let btn = document.createElement("button");
-        btn.className = "option-btn";
-        btn.innerText = optText;
-        btn.onclick = () => evaluationSelection(btn, index);
-        optionsContainer.appendChild(btn);
-    });
+            let optionsContainer = document.getElementById("options-container");
+            optionsContainer.innerHTML = "";
 
-    // Run MathJax rendering processor
-    if (window.MathJax && window.MathJax.typesetPromise) {
-        MathJax.typesetPromise();
-    }
-}
+            currentItem.options.forEach((optText, index) => {
+                let btn = document.createElement("button");
+                btn.className = "option-btn";
+                btn.innerText = optText;
+                btn.onclick = () => evaluationSelection(btn, index);
+                optionsContainer.appendChild(btn);
+            });
 
-function evaluationSelection(selectedBtn, chosenIdx) {
-    let currentItem = activeQuizPool[currentQuestionIdx];
-    let allButtons = document.querySelectorAll(".option-btn");
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise();
+            }
+        }
 
-    allButtons.forEach(btn => btn.disabled = true);
+        function evaluationSelection(selectedBtn, chosenIdx) {
+            let currentItem = activeQuizPool[currentQuestionIdx];
+            let allButtons = document.querySelectorAll(".option-btn");
 
-    if (chosenIdx === currentItem.answer) {
-        selectedBtn.classList.add("correct");
-        scoreCounter++;
-    } else {
-        selectedBtn.classList.add("wrong");
-        allButtons[currentItem.answer].classList.add("correct");
-    }
+            allButtons.forEach(btn => btn.disabled = true);
 
-    let expBox = document.getElementById("explanation-wrapper");
-    let expText = document.getElementById("explanation-text");
-    
-    // Clear old notices if any exist
-    const oldNotices = expBox.querySelectorAll('.lock-notice-text');
-    oldNotices.forEach(n => n.remove());
+            if (chosenIdx === currentItem.answer) {
+                selectedBtn.classList.add("correct");
+                scoreCounter++;
+            } else {
+                selectedBtn.classList.add("wrong");
+                allButtons[currentItem.answer].classList.add("correct");
+            }
 
-    expBox.style.display = "block";
+            let expBox = document.getElementById("explanation-wrapper");
+            let expText = document.getElementById("explanation-text");
+            
+            const oldNotices = expBox.querySelectorAll('.lock-notice-text');
+            oldNotices.forEach(n => n.remove());
 
-    if (userIsPremium) {
-        expText.className = ""; 
-        expText.innerText = currentItem.exp;
-    } else {
-        expText.className = "premium-blur";
-        expText.innerText = "This advanced analysis step is obfuscated. Upgrade to premium profile to instantly reveal calculations.";
-        
-        let lockNotice = document.createElement("div");
-        lockNotice.className = "lock-notice-text";
-        lockNotice.innerHTML = "<p style='color:#ff4757; font-size:12px; margin-top:5px; font-weight:bold;'>⚠️ Explanations locked! Available in Premium Tier.</p>";
-        expBox.appendChild(lockNotice);
-    }
+            expBox.style.display = "block";
 
-    // Trigger math equations typesetting refresh for explanations too!
-    if (window.MathJax && window.MathJax.typesetPromise) {
-        MathJax.typesetPromise();
-    }
+            if (userIsPremium) {
+                expText.className = ""; 
+                expText.innerText = currentItem.exp;
+            } else {
+                expText.className = "premium-blur";
+                expText.innerText = "This advanced analysis step is obfuscated. Upgrade to premium profile to instantly reveal calculations.";
+                
+                let lockNotice = document.createElement("div");
+                lockNotice.className = "lock-notice-text";
+                lockNotice.innerHTML = "<p style='color:#ff4757; font-size:12px; margin-top:5px; font-weight:bold;'>⚠️ Explanations locked! Available in Premium Tier.</p>";
+                expBox.appendChild(lockNotice);
+            }
 
-    document.getElementById("next-button").style.display = "block";
-}
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise();
+            }
 
-function nextQuestion() {
-    currentQuestionIdx++;
-    if (currentQuestionIdx < activeQuizPool.length) {
-        renderQuestion();
-    } else {
-        clearInterval(countdownInterval);
-        terminateSimulation();
-    }
-}
+            document.getElementById("next-button").style.display = "block";
+        }
 
-function terminateSimulation() {
-    document.getElementById("quiz-gameplay").style.display = "none";
-    document.getElementById("quiz-results").style.display = "block";
-    document.getElementById("final-score").innerText = `${scoreCounter} / ${activeQuizPool.length}`;
+        function nextQuestion() {
+            currentQuestionIdx++;
+            if (currentQuestionIdx < activeQuizPool.length) {
+                renderQuestion();
+            } else {
+                clearInterval(countdownInterval);
+                terminateSimulation();
+            }
+        }
 
-    let xpEarned = scoreCounter * 20;
-    let currentGlobalXP = parseInt(localStorage.getItem("userXP")) || 0;
-    localStorage.setItem("userXP", currentGlobalXP + xpEarned);
+        // 🔥 SECURE CLOUD SYNCHRONIZATION BACKEND PIPELINE
+        async function syncUserScoreToCloud(username, currentXP) {
+            if (!username || currentXP <= 0) return;
+            try {
+                await fetch('/api/save-score', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: username, totalXP: currentXP })
+                });
+                console.log("Database scorecard synchronized seamlessly.");
+            } catch (err) {
+                console.error("Cloud entry dispatch failure:", err);
+            }
+        }
 
-    document.getElementById("xp-reward-text").innerText = `🎉 You earned +${xpEarned} XP tracking points!`;
-}
+        function terminateSimulation() {
+            document.getElementById("quiz-gameplay").style.display = "none";
+            document.getElementById("quiz-results").style.display = "block";
+            document.getElementById("final-score").innerText = `${scoreCounter} / ${activeQuizPool.length}`;
+
+            let xpEarned = scoreCounter * 20;
+            
+            // 🔄 FIXED STORAGE KEY: Changed from 'userXP' to match leaderboard 'totalUserXP'
+            let currentGlobalXP = parseInt(localStorage.getItem("totalUserXP") || "0", 10);
+            let updatedXPValue = currentGlobalXP + xpEarned;
+            
+            localStorage.setItem("totalUserXP", updatedXPValue);
+
+            // Fetch the logged-in profile display identity
+            let sessionUsernameString = localStorage.getItem("currentUserName") || "Aspirant";
+
+            document.getElementById("xp-reward-text").innerText = `🎉 You earned +${xpEarned} XP tracking points!`;
+
+            // 🚀 STAGE 2 ACTION: Push the newly updated cumulative totals straight to Supabase!
+            if (xpEarned > 0) {
+                syncUserScoreToCloud(sessionUsernameString, updatedXPValue);
+            }
+        }
     </script>
 </body>
 </html>
