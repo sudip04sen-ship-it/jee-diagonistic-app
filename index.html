@@ -584,27 +584,31 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
         }
 
-
 // =====================================================================
 // 🏆 LIVE CLOUD-CONNECTED NATIONAL LEADERBOARD LOGIC
 // =====================================================================
+
+// 1. Setup Username Gateway prompt IMMEDIATELY on boot up before variables lock
+if (!localStorage.getItem("currentUserName")) {
+    let inputName = prompt("Enter your Aspirant Profile Display Name:", "Aspirant_" + Math.floor(1000 + Math.random() * 9000));
+    if (inputName) {
+        localStorage.setItem("currentUserName", inputName.trim());
+    } else {
+        localStorage.setItem("currentUserName", "Aspirant_" + Math.floor(1000 + Math.random() * 9000));
+    }
+}
 
 async function renderNationalLeaderboard() {
     let listContainer = document.getElementById("leaderboard-list");
     if (!listContainer) return;
     
-    // Fetch current active user's local name for identity highlighting
     let currentName = localStorage.getItem("currentUserName") || "You (Aspirant)";
-
-    // Set UI loading indicator state
     listContainer.innerHTML = `<li style="color:#a4b0be; list-style:none;">Syncing live leaderboard matrix...</li>`;
 
     try {
-        // Query your cloud backend endpoint running on Vercel
         const response = await fetch('/api/get-scores');
         const data = await response.json();
 
-        // Wipe loading text cleanly before appending entries
         listContainer.innerHTML = ""; 
 
         if (!data.ranks || data.ranks.length === 0) {
@@ -612,16 +616,13 @@ async function renderNationalLeaderboard() {
             return;
         }
 
-        // Build the dynamic live visual HTML output
         data.ranks.forEach((player, idx) => {
             let li = document.createElement("li");
             
-            // Apply rewards for podium positions matching your styling rules
             if (idx === 0) li.style.color = "#ffd700";      // 👑 Gold
             else if (idx === 1) li.style.color = "#c0c0c0"; // 🥈 Silver
             else if (idx === 2) li.style.color = "#cd7f32"; // 🥉 Bronze
             
-            // Highlight the active session player character matching cloud names
             if (player.username === currentName) {
                 li.innerHTML = `<strong>${idx + 1}. ${player.username} — ${player.total_xp} XP (You)</strong>`;
             } else {
@@ -636,7 +637,6 @@ async function renderNationalLeaderboard() {
     }
 }
 
-// Securely dispatch new points to the backend
 async function syncUserScoreToCloud(username, currentXP) {
     if (!username || currentXP <= 0) return;
     
@@ -649,7 +649,6 @@ async function syncUserScoreToCloud(username, currentXP) {
         
         if (response.ok) {
             console.log("Global scoreboard state synchronized successfully.");
-            // Refresh rankings to dynamically display your entry instantly
             renderNationalLeaderboard(); 
         }
     } catch (err) {
@@ -657,32 +656,18 @@ async function syncUserScoreToCloud(username, currentXP) {
     }
 }
 
-// Setup Username Gateway prompt if missing on initial site bootup
-if (!localStorage.getItem("currentUserName")) {
-    let inputName = prompt("Enter your Aspirant Profile Display Name:", "Aspirant_" + Math.floor(1000 + Math.random() * 9000));
-    if (inputName) {
-        localStorage.setItem("currentUserName", inputName.trim());
-    }
-}
 // 🔥 GLOBAL FUNCTION: Call this whenever a user solves a question correctly!
 window.addXpReward = function(amount = 100) {
-    // 1. Pull current score from local memory safely
     let latestXP = parseInt(localStorage.getItem("totalUserXP") || "0", 10);
     let currentUsername = localStorage.getItem("currentUserName") || "Aspirant";
 
-    // 2. Add the new points
     latestXP += amount;
-
-    // 3. Save the new score back to local storage
     localStorage.setItem("totalUserXP", latestXP);
 
-    // 4. Update the text on the user screen instantly
     let displayXpNode = document.getElementById("user-leaderboard-xp");
     if (displayXpNode) displayXpNode.innerText = latestXP;
 
     console.log(`Earned +${amount} XP! New Total: ${latestXP}. Syncing to cloud...`);
-
-    // 5. Fire the secure pipeline straight to Supabase!
     syncUserScoreToCloud(currentUsername, latestXP);
 };
 
@@ -695,7 +680,7 @@ let currentUserNameString = localStorage.getItem("currentUserName") || "Aspirant
 let displayXpNode = document.getElementById("user-leaderboard-xp");
 if (displayXpNode) displayXpNode.innerText = currentXPValue;
 
-// 🔥 FIX: Just read the leaderboard on refresh! Do NOT push a new score row.
+// Read the leaderboard values safely on reload
 renderNationalLeaderboard();
 
         // Interface helper bindings
