@@ -10,21 +10,26 @@ export default async function handler(req, res) {
         const supabaseUrl = process.env.SUPABASE_URL;
         const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-        // Securely push the new score into your Supabase database table
-        const response = await fetch(`${supabaseUrl}/rest/v1/leaderboard`, {
+        // 🔥 FIX: Added 'on_conflict=username' query param and 'resolution=merge-duplicates' header
+        // This stops duplication forever!
+        const response = await fetch(`${supabaseUrl}/rest/v1/leaderboard?on_conflict=username`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'apikey': supabaseKey,
                 'Authorization': `Bearer ${supabaseKey}`,
-                'Prefer': 'return=minimal'
+                'Prefer': 'resolution=merge-duplicates,return=minimal' 
             },
             body: JSON.stringify({ username: username, total_xp: parseInt(totalXP, 10) })
         });
 
-        if (!response.ok) throw new Error('Database write rejected');
+        if (!response.ok) {
+            const errText = await response.text();
+            console.error("Supabase error detail:", errText);
+            throw new Error('Database write rejected');
+        }
 
-        return res.status(200).json({ success: true, message: 'Global score updated!' });
+        return res.status(200).json({ success: true, message: 'Global score updated cleanly!' });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: 'Database pipeline transaction error' });
