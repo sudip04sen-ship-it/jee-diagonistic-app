@@ -42,7 +42,6 @@
             width: 100%; background: #131324; border: 1px solid #444; color: #fff;
             padding: 10px; border-radius: 4px; font-size: 14px; margin-top: 10px; box-sizing: border-box;
         }
-        /* Styling for disabled fields to clearly show they are locked */
         .quiz-text-input:disabled {
             background: #1b1b32;
             color: #747d8c;
@@ -88,7 +87,19 @@
 
         <button class="btn-launch" onclick="generateCustomQuizSession()">Initialize Core Blueprint ⚡</button>
     </div>
-    <script>
+
+    <div id="quiz-terminal" class="quiz-engine-view">
+        <div id="quiz-clock" class="timer-banner">Time Remaining: --:--</div>
+        <div id="questions-go-here"></div>
+        <div id="quiz-action-zone" style="margin-top: 20px;">
+            <button class="btn-launch" style="background: linear-gradient(135deg, #2ed573, #1e90ff);" onclick="submitQuizSession()">
+                Submit Assignment Matrix 🚀
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
 const QUESTION_BANK = {
     math: {
         calculus: {
@@ -236,7 +247,7 @@ const QUESTION_BANK = {
                 { q: "Name the phenomenon that directly demonstrates the particle nature of light.", a: "Photoelectric Effect" }
             ],
             medium: [
-                { q: "Calculate the energy of a photon corresponding to light of wavelength 4000 Angstroms (in eV, use standard shortcut estimation).", a: "3.1 eV" },
+                { q: "Calculate the energy of a photon corresponding to light of wavelength 4000 Angstroms (in eV).", a: "3.1 eV" },
                 { q: "If the half-life of a radioactive sample is 10 days, what fraction of the sample remains undecayed after 20 days?", a: "1/4" },
                 { q: "Find the momentum of a photon of frequency v.", a: "hv/c" }
             ],
@@ -280,7 +291,7 @@ const QUESTION_BANK = {
             ],
             tough: [
                 { q: "Determine the crystal field stabilization energy (CFSE) configuration for a d6 high-spin octahedral complex field in terms of Delta_o.", a: "-0.4 Delta_o" },
-                { q: "For a gas-phase reaction where delta n (change in gaseous moles) is equal to -1, what is the value of Kp / Kc at a temperature of T Kelvin?", a: "1/(RT)" }
+                { q: "For a gas-phase reaction where delta n is equal to -1, what is the value of Kp / Kc at a temperature of T Kelvin?", a: "1/(RT)" }
             ]
         },
         inorganic: {
@@ -317,29 +328,21 @@ const QUESTION_BANK = {
         }
     }
 };
+
 // =====================================================================
-// 🎲 THE ULTIMATE RANDOMIZER AND SHUFFLER UTILITY ENGINE
+// 🎲 RANDOMIZER ENGINE
 // =====================================================================
 function getRandomQuizQuestions(subject, topic, difficulty, count = 3) {
     try {
-        // Safe check down the hierarchical pathway
-        if (!QUESTION_BANK[subject] || 
-            !QUESTION_BANK[subject][topic] || 
-            !QUESTION_BANK[subject][topic][difficulty]) {
+        if (!QUESTION_BANK[subject] || !QUESTION_BANK[subject][topic] || !QUESTION_BANK[subject][topic][difficulty]) {
             console.error("Target path inside question bank array is broken.");
             return [];
         }
-
-        // Deep clone array slice so we don't scramble our master records
         let pool = [...QUESTION_BANK[subject][topic][difficulty]];
-
-        // Fisher-Yates Random Shuffling Engine Loop
         for (let i = pool.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [pool[i], pool[j]] = [pool[j], pool[i]];
         }
-
-        // Return the exact count requested for the live terminal template
         return pool.slice(0, count);
     } catch (err) {
         console.error("Critical error inside the randomization workflow:", err);
@@ -372,6 +375,7 @@ window.onload = function() {
         });
     }
 };
+
 function generateCustomQuizSession() {
     const chapterSelect = document.getElementById("chapter-select");
     const difficultySelect = document.getElementById("difficulty-select");
@@ -387,13 +391,11 @@ function generateCustomQuizSession() {
     let count = parseInt(countInput.value, 10) || 5;
     if (count > 10) count = 10; 
 
-    // 1. Guard clause validation check
     if (!QUESTION_BANK[activeSubject] || !QUESTION_BANK[activeSubject][chapter] || !QUESTION_BANK[activeSubject][chapter][difficulty]) {
         outputContainer.innerHTML = `<p style="color: #ff4757; font-weight: bold;">⚠️ No matching profile records located in repository setup bank.</p>`;
         return;
     }
 
-    // 2. Retrieve randomized questions using your shuffler engine
     currentSessionQuestions = getRandomQuizQuestions(activeSubject, chapter, difficulty, count);
 
     if (currentSessionQuestions.length === 0) {
@@ -401,37 +403,30 @@ function generateCustomQuizSession() {
         return;
     }
 
-    // 3. Clear container and dynamically inject questions into the DOM
     outputContainer.innerHTML = "";
     currentSessionQuestions.forEach((item, index) => {
         let questionCard = document.createElement("div");
         questionCard.className = "question-card";
-        questionCard.style = "margin-bottom: 20px; padding: 15px; border-left: 4px solid #5352ed; background: rgba(255,255,255,0.05); border-radius: 4px;";
         questionCard.innerHTML = `
             <p style="font-weight: bold; margin-bottom: 8px; color: #f1f2f6;">Q${index + 1}: ${item.q}</p>
-            <input type="text" id="ans-input-${index}" placeholder="Type your answer here..." style="width: 100%; padding: 8px; background: #2f3542; border: 1px solid #57606f; color: #fff; border-radius: 4px;">
+            <input type="text" id="ans-input-${index}" class="quiz-text-input" placeholder="Type your answer here...">
+            <div id="feedback-${index}" style="margin-top: 10px; font-size: 13px; font-weight: bold; display: none;"></div>
         `;
         outputContainer.appendChild(questionCard);
     });
 
-    // 4. Update panel views (Hide setup panel, reveal quiz panel)
     if (setupPanel) setupPanel.style.display = "none";
     if (quizTerminal) quizTerminal.style.display = "block";
 
-    // 5. Initialize the countdown system
     let minutesSelected = parseInt(timeSelect.value, 10) || 10;
     secondsLeft = minutesSelected * 60;
     
-    // Clear any active intervals before starting a new one
     if (activeTimer) clearInterval(activeTimer);
     
     startQuizClockTimer();
     activeTimer = setInterval(startQuizClockTimer, 1000);
 }
 
-// =====================================================================
-// ⏱️ TIMER SYSTEM UTILITY BACKGROUND LOOP
-// =====================================================================
 function startQuizClockTimer() {
     const clockNode = document.getElementById("quiz-clock");
     if (!clockNode) return;
@@ -440,9 +435,7 @@ function startQuizClockTimer() {
         clearInterval(activeTimer);
         clockNode.innerText = "Time Expired!";
         alert("⏱️ Time is up! Automatically finalizing your quiz sheet.");
-        if (typeof submitQuizSession === "function") {
-            submitQuizSession(); 
-        }
+        submitQuizSession();
         return;
     }
 
@@ -451,7 +444,44 @@ function startQuizClockTimer() {
     clockNode.innerText = `Time Remaining: ${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     secondsLeft--;
 }
+
+// 🌟 FIXED: ADDED THE EVALUATION METHOD FOR SUBMITTING ANSWERS
+function submitQuizSession() {
+    clearInterval(activeTimer);
+    let score = 0;
+
+    currentSessionQuestions.forEach((item, index) => {
+        const userInput = document.getElementById(`ans-input-${index}`);
+        const feedback = document.getElementById(`feedback-${index}`);
+
+        if (userInput && feedback) {
+            userInput.disabled = true;
+            feedback.style.display = "block";
+
+            let cleanUserAns = userInput.value.trim().toLowerCase();
+            let cleanCorrectAns = item.a.trim().toLowerCase();
+
+            if (cleanUserAns === cleanCorrectAns) {
+                feedback.innerText = `✅ Correct! (+50 XP)`;
+                feedback.style.color = "#2ed573";
+                score += 50;
+            } else {
+                feedback.innerText = `❌ Incorrect. Correct Answer: ${item.a}`;
+                feedback.style.color = "#ff4757";
+            }
+        }
+    });
+
+    const actionZone = document.getElementById("quiz-action-zone");
+    if (actionZone) {
+        actionZone.innerHTML = `
+            <p style="font-weight: bold; color: #00d2d3;">Session Complete! Total Points Gained: +${score} XP</p>
+            <button class="btn-launch" style="background: #ff4757; margin-top: 10px;" onclick="window.location.reload()">
+                Take Another Quiz 🔄
+            </button>
+        `;
+    }
+}
 </script>
-<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
