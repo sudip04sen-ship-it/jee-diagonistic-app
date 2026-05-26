@@ -666,7 +666,7 @@ if (!localStorage.getItem("currentUserName")) {
 }
 
 // =====================================================================
-// 🎬 INITIALIZATION SEQUENCE ON BOOTUP
+// 🎬 INITIALIZATION SEQUENCE ON BOOTUP (FIXED)
 // =====================================================================
 let currentXPValue = parseInt(localStorage.getItem("totalUserXP") || "0", 10);
 let currentUserNameString = localStorage.getItem("currentUserName") || "Aspirant";
@@ -674,12 +674,8 @@ let currentUserNameString = localStorage.getItem("currentUserName") || "Aspirant
 let displayXpNode = document.getElementById("user-leaderboard-xp");
 if (displayXpNode) displayXpNode.innerText = currentXPValue;
 
-// Trigger database push if points have accumulated locally
-if (currentXPValue > 0) {
-    syncUserScoreToCloud(currentUserNameString, currentXPValue);
-} else {
-    renderNationalLeaderboard();
-}
+// 🔥 FIX: Just read the leaderboard on refresh! Do NOT push a new score row.
+renderNationalLeaderboard();
 
         // Interface helper bindings
 
