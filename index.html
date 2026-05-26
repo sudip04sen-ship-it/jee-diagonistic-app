@@ -672,7 +672,7 @@ window.addXpReward = function(amount = 100) {
 };
 
 // =====================================================================
-// 🎬 INITIALIZATION SEQUENCE ON BOOTUP (FIXED)
+// 🎬 INITIALIZATION SEQUENCE ON BOOTUP (AUTO-SYNC VERSION)
 // =====================================================================
 let currentXPValue = parseInt(localStorage.getItem("totalUserXP") || "0", 10);
 let currentUserNameString = localStorage.getItem("currentUserName") || "Aspirant";
@@ -680,8 +680,14 @@ let currentUserNameString = localStorage.getItem("currentUserName") || "Aspirant
 let displayXpNode = document.getElementById("user-leaderboard-xp");
 if (displayXpNode) displayXpNode.innerText = currentXPValue;
 
-// Read the leaderboard values safely on reload
-renderNationalLeaderboard();
+// 🔄 Check if they have points that haven't been synchronized yet
+// This catches points when they return from quiz-game.html!
+if (currentXPValue > 0) {
+    console.log("Detecting unsynced points from quiz session. Syncing now...");
+    syncUserScoreToCloud(currentUserNameString, currentXPValue);
+} else {
+    renderNationalLeaderboard();
+}
 
         // Interface helper bindings
 
