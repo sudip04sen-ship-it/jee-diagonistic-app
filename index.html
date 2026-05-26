@@ -145,9 +145,37 @@
 
 
         .drawer-item:hover {
-
             background-color: #2e2e4e;
+        }
 
+        /* 🏁 ADD THIS SCROLL WINDOW STYLING BELOW */
+        #leaderboard-list {
+            max-height: 220px;        /* Fixes the size of the box */
+            overflow-y: auto;         /* Makes it scrollable */
+            padding-left: 5px;        /* Moves text slightly away from edge */
+            margin: 0;
+            list-style: none;         /* Clears default numbers */
+        }
+
+        /* Makes the scrollbar look thin and purple */
+        #leaderboard-list::-webkit-scrollbar {
+            width: 5px;
+        }
+        #leaderboard-list::-webkit-scrollbar-track {
+            background: #131324;
+        }
+        #leaderboard-list::-webkit-scrollbar-thumb {
+            background: #4d00ff;
+            border-radius: 4px;
+        }
+
+        /* Highlights your row in cool neon teal */
+        .highlight-user {
+            background: rgba(0, 210, 211, 0.15);
+            border-left: 3px solid #00d2d3;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin: 4px 0;
         }
 
     </style>
@@ -275,11 +303,10 @@
 
                 </div>
 
-                <ol id="leaderboard-list" style="padding-left: 15px; margin: 0; font-size: 13px; line-height: 1.6;">
-
-                    <li><strong>You - <span id="user-leaderboard-xp">0</span> XP</strong></li>
-
-                </ol>
+                <!-- 🌟 WE CHANGED <ol> TO <ul> TO MAKE THE CSS CODES WORK PERFECTLY -->
+                <ul id="leaderboard-list" style="font-size: 13px; line-height: 1.6;">
+                    <li class="highlight-user"><strong>1. You — <span id="user-leaderboard-xp">0</span> XP</strong></li>
+                </ul>
 
             </div>
 
@@ -615,23 +642,30 @@ async function renderNationalLeaderboard() {
             listContainer.innerHTML = `<li style="color:#a4b0be; list-style:none;">No active terminal records found. Solve a quiz to register!</li>`;
             return;
         }
-
-        data.ranks.forEach((player, idx) => {
+data.ranks.forEach((player, idx) => {
             let li = document.createElement("li");
+            li.style.padding = "6px 0"; // Gives list items clean spacing
             
             if (idx === 0) li.style.color = "#ffd700";      // 👑 Gold
             else if (idx === 1) li.style.color = "#c0c0c0"; // 🥈 Silver
             else if (idx === 2) li.style.color = "#cd7f32"; // 🥉 Bronze
             
+            // Check if this list row belongs to the current logged-in user
             if (player.username === currentName) {
+                li.className = "highlight-user"; // Attaches the neon border CSS
                 li.innerHTML = `<strong>${idx + 1}. ${player.username} — ${player.total_xp} XP (You)</strong>`;
+                
+                // 🚀 JUMP-TO-ME ENGINE: Automatically centers the scrollbar onto your profile row
+                setTimeout(() => {
+                    li.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
             } else {
                 li.innerHTML = `${idx + 1}. ${player.username} — ${player.total_xp} XP`;
             }
             listContainer.appendChild(li);
         });
-
-    } catch (error) {
+        
+           } catch (error) {
         console.error("Leaderboard interface render failure:", error);
         listContainer.innerHTML = `<li style="color:#ff4757; list-style:none;">⚠️ Failed to load national rankings.</li>`;
     }
