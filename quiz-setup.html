@@ -104,233 +104,233 @@ const QUESTION_BANK = {
     math: {
         calculus: {
             easy: [
-                { q: "Find the derivative of x³ with respect to x.", a: "3x²" },
-                { q: "What is the derivative of sin(x)?", a: "cos(x)" },
-                { q: "Evaluate the indefinite integral: ∫ 2x dx.", a: "x² + C" },
-                { q: "What is the derivative of e^x?", a: "e^x" },
-                { q: "Find the derivative of ln(x).", a: "1/x" },
-                { q: "Find the derivative of sec(x) with respect to x.", a: "sec(x)tan(x)" }
+                { q: "Find the derivative of x³ with respect to x.", options: ["2x²", "3x²", "3x", "x²"], a: "3x²" },
+                { q: "What is the derivative of sin(x)?", options: ["-sin(x)", "cos(x)", "-cos(x)", "tan(x)"], a: "cos(x)" },
+                { q: "Evaluate the indefinite integral: ∫ 2x dx.", options: ["x² + C", "2x² + C", "x + C", "2 + C"], a: "x² + C" },
+                { q: "What is the derivative of e^x?", options: ["xe^(x-1)", "e^x", "ln(x)", "1/e^x"], a: "e^x" },
+                { q: "Find the derivative of ln(x).", options: ["e^x", "1/x", "-1/x²", "x"], a: "1/x" },
+                { q: "Find the derivative of sec(x) with respect to x.", options: ["sec²(x)", "tan²(x)", "sec(x)tan(x)", "-sec(x)tan(x)"], a: "sec(x)tan(x)" }
             ],
             medium: [
-                { q: "Find the total area enclosed between the curves y = x² and y = x.", a: "1/6" },
-                { q: "Find the derivative of ln(x²) at x = 1.", a: "2" },
-                { q: "Evaluate the limit as x approaches 0 of sin(5x)/x.", a: "5" },
-                { q: "Find the slope of the tangent to the curve y = x² - 4x at the point (3, -3).", a: "2" },
-                { q: "Evaluate the limit as x approaches infinity of (1 + 1/x)^x.", a: "e" }
+                { q: "Find the total area enclosed between the curves y = x² and y = x.", options: ["1/2", "1/3", "1/6", "1/4"], a: "1/6" },
+                { q: "Find the derivative of ln(x²) at x = 1.", options: ["1", "2", "0", "1/2"], a: "2" },
+                { q: "Evaluate the limit as x approaches 0 of sin(5x)/x.", options: ["0", "1", "5", "Infinity"], a: "5" },
+                { q: "Find the slope of the tangent to the curve y = x² - 4x at the point (3, -3).", options: ["2", "-2", "4", "0"], a: "2" },
+                { q: "Evaluate the limit as x approaches infinity of (1 + 1/x)^x.", options: ["1", "0", "e", "Infinity"], a: "e" }
             ],
             tough: [
-                { q: "Evaluate the definite integral from 0 to pi of x*sin(x)/(1+cos²(x)).", a: "pi² / 4" },
-                { q: "Find the number of points of non-differentiability for f(x) = |x| + |x-1|.", a: "2" },
-                { q: "Let f(x) = x³ + 3x² + 4x + 5. If g(x) is the inverse of f(x), find the value of g'(5).", a: "1/4" },
-                { q: "Find the value of the definite integral from 0 to pi/2 of ln(sin(x)) dx.", a: "-pi/2 * ln(2)" }
+                { q: "Evaluate the definite integral from 0 to pi of x*sin(x)/(1+cos²(x)).", options: ["pi²/2", "pi²/4", "pi/2", "pi/4"], a: "pi² / 4" },
+                { q: "Find the number of points of non-differentiability for f(x) = |x| + |x-1|.", options: ["0", "1", "2", "3"], a: "2" },
+                { q: "Let f(x) = x³ + 3x² + 4x + 5. If g(x) is the inverse of f(x), find the value of g'(5).", options: ["1", "1/2", "1/4", "0"], a: "1/4" },
+                { q: "Find the value of the definite integral from 0 to pi/2 of ln(sin(x)) dx.", options: ["pi/2 * ln(2)", "-pi/2 * ln(2)", "pi * ln(2)", "-pi * ln(2)"], a: "-pi/2 * ln(2)" }
             ]
         },
         coordinateGeometry: {
             easy: [
-                { q: "What is the slope of a line parallel to y = 3x + 5?", a: "3" },
-                { q: "Find the distance between the origin (0,0) and the point (3,4).", a: "5" },
-                { q: "Find the midpoint of the line segment joining (2,4) and (6,8).", a: "(4,6)" },
-                { q: "What is the radius of the circle x² + y² = 49?", a: "7" },
-                { q: "Find the slope of a line perpendicular to the line 2x - 3y + 6 = 0.", a: "-3/2" }
+                { q: "What is the slope of a line parallel to y = 3x + 5?", options: ["3", "-3", "1/3", "-1/3"], a: "3" },
+                { q: "Find the distance between the origin (0,0) and the point (3,4).", options: ["5", "7", "25", "sqrt(7)"], a: "5" },
+                { q: "Find the midpoint of the line segment joining (2,4) and (6,8).", options: ["(4,4)", "(3,6)", "(4,6)", "(3,5)"], a: "(4,6)" },
+                { q: "What is the radius of the circle x² + y² = 49?", options: ["49", "7", "14", "9.8"], a: "7" },
+                { q: "Find the slope of a line perpendicular to the line 2x - 3y + 6 = 0.", options: ["2/3", "-2/3", "3/2", "-3/2"], a: "-3/2" }
             ],
             medium: [
-                { q: "Determine the eccentricity of the ellipse x²/16 + y²/9 = 1.", a: "sqrt(7)/4" },
-                { q: "Find the equation of the tangent to the circle x² + y² = 25 at the point (3,4).", a: "3x + 4y = 25" },
-                { q: "Find the focus of the parabola y² = 12x.", a: "(3,0)" },
-                { q: "Find the length of the latus rectum of the hyperbola x²/9 - y²/16 = 1.", a: "32/3" }
+                { q: "Determine the eccentricity of the ellipse x²/16 + y²/9 = 1.", options: ["sqrt(7)/4", "7/16", "3/4", "5/4"], a: "sqrt(7)/4" },
+                { q: "Find the equation of the tangent to the circle x² + y² = 25 at the point (3,4).", options: ["3x + 4y = 5", "3x + 4y = 25", "4x - 3y = 0", "4x + 3y = 25"], a: "3x + 4y = 25" },
+                { q: "Find the focus of the parabola y² = 12x.", options: ["(4,0)", "(3,0)", "(0,3)", "(6,0)"], a: "(3,0)" },
+                { q: "Find the length of the latus rectum of the hyperbola x²/9 - y²/16 = 1.", options: ["32/3", "16/3", "8/3", "64/3"], a: "32/3" }
             ],
             tough: [
-                { q: "Find the condition for the line y = mx + c to be a tangent to the hyperbola x²/a² - y²/b² = 1.", a: "c² = a²m² - b²" },
-                { q: "Find the locus of the point of intersection of perpendicular tangents to the parabola y² = 4ax.", a: "x = -a" },
-                { q: "Find the equation of the director circle of the ellipse x²/a² + y²/b² = 1.", a: "x² + y² = a² + b²" }
+                { q: "Find the condition for the line y = mx + c to be a tangent to the hyperbola x²/a² - y²/b² = 1.", options: ["c² = a²m² + b²", "c² = a²m² - b²", "c² = b² - a²m²", "c = am + b"], a: "c² = a²m² - b²" },
+                { q: "Find the locus of the point of intersection of perpendicular tangents to the parabola y² = 4ax.", options: ["x = a", "x = -a", "y = a", "y = -a"], a: "x = -a" },
+                { q: "Find the equation of the director circle of the ellipse x²/a² + y²/b² = 1.", options: ["x² + y² = a² - b²", "x² + y² = a² + b²", "x² + y² = ab", "x² + y² = (a+b)²"], a: "x² + y² = a² + b²" }
             ]
         },
         algebra: {
             easy: [
-                { q: "Find the value of log base 2 of 8.", a: "3" },
-                { q: "Find the sum of the roots of the quadratic equation x² - 5x + 6 = 0.", a: "5" },
-                { q: "Find the product of the roots of the quadratic equation x² - 7x + 12 = 0.", a: "12" },
-                { q: "Find the value of 5! (factorial of 5).", a: "120" },
-                { q: "If log_x(243) = 5, find the value of x.", a: "3" }
+                { q: "Find the value of log base 2 of 8.", options: ["2", "3", "4", "8"], a: "3" },
+                { q: "Find the sum of the roots of the quadratic equation x² - 5x + 6 = 0.", options: ["5", "-5", "6", "-6"], a: "5" },
+                { q: "Find the product of the roots of the quadratic equation x² - 7x + 12 = 0.", options: ["7", "-7", "12", "-12"], a: "12" },
+                { q: "Find the value of 5! (factorial of 5).", options: ["60", "120", "24", "720"], a: "120" },
+                { q: "If log_x(243) = 5, find the value of x.", options: ["3", "4", "5", "7"], a: "3" }
             ],
             medium: [
-                { q: "If alpha and beta are roots of x² - 5x + 6 = 0, evaluate alpha² + beta².", a: "13" },
-                { q: "Find the sum of the coefficients in the expansion of (1 - 3x + x²)^111.", a: "-1" },
-                { q: "Find the 5th term of an Arithmetic Progression (AP) whose first term is 3 and common difference is 4.", a: "19" },
-                { q: "Find the number of terms in the expansion of (x + y + z)^10.", a: "66" }
+                { q: "If alpha and beta are roots of x² - 5x + 6 = 0, evaluate alpha² + beta².", options: ["25", "13", "19", "31"], a: "13" },
+                { q: "Find the sum of the coefficients in the expansion of (1 - 3x + x²)^111.", options: ["1", "0", "-1", "2^111"], a: "-1" },
+                { q: "Find the 5th term of an Arithmetic Progression (AP) whose first term is 3 and common difference is 4.", options: ["15", "19", "23", "12"], a: "19" },
+                { q: "Find the number of terms in the expansion of (x + y + z)^10.", options: ["55", "66", "45", "11"], a: "66" }
             ],
             tough: [
-                { q: "If the roots of the equation x³ - 3x² + kx + 14 = 0 are in Arithmetic Progression, find the real value of k.", a: "-6" },
-                { q: "Find the number of real roots of the equation e^(sin x) - e^(-sin x) - 4 = 0.", a: "0" },
-                { q: "Evaluate the determinant of a 3x3 skew-symmetric matrix of odd order.", a: "0" }
+                { q: "If the roots of the equation x³ - 3x² + kx + 14 = 0 are in Arithmetic Progression, find the real value of k.", options: ["-3", "-6", "3", "6"], a: "-6" },
+                { q: "Find the number of real roots of the equation e^(sin x) - e^(-sin x) - 4 = 0.", options: ["0", "1", "2", "Infinite"], a: "0" },
+                { q: "Evaluate the determinant of a 3x3 skew-symmetric matrix of odd order.", options: ["1", "-1", "0", "Depends on elements"], a: "0" }
             ]
         },
         inequalities: {
             easy: [
-                { q: "Solve for x: 2x - 4 > 0.", a: "x > 2" },
-                { q: "Solve for x: -3x < 9.", a: "x > -3" },
-                { q: "For what values of x is |x| < 5?", a: "-5 < x < 5" }
+                { q: "Solve for x: 2x - 4 > 0.", options: ["x > 2", "x < 2", "x >= 2", "x = 2"], a: "x > 2" },
+                { q: "Solve for x: -3x < 9.", options: ["x < -3", "x > -3", "x < 3", "x > 3"], a: "x > -3" },
+                { q: "For what values of x is |x| < 5?", options: ["x < 5", "x > -5", "-5 < x < 5", "x = 5"], a: "-5 < x < 5" }
             ],
             medium: [
-                { q: "Solve the quadratic inequality: x² - 5x + 6 < 0.", a: "2 < x < 3" },
-                { q: "Solve the polynomial inequality: (x - 1)(x - 2) >= 0.", a: "x <= 1 or x >= 2" },
-                { q: "For what values of x is the expression sqrt(x - 3) real and defined?", a: "x >= 3" },
-                { q: "Solve the modular inequality: |2x - 3| <= 5.", a: "-1 <= x <= 4" }
+                { q: "Solve the quadratic inequality: x² - 5x + 6 < 0.", options: ["x < 2 or x > 3", "2 < x < 3", "x <= 2", "x >= 3"], a: "2 < x < 3" },
+                { q: "Solve the polynomial inequality: (x - 1)(x - 2) >= 0.", options: ["1 <= x <= 2", "x <= 1 or x >= 2", "x > 2", "x < 1"], a: "x <= 1 or x >= 2" },
+                { q: "For what values of x is the expression sqrt(x - 3) real and defined?", options: ["x > 3", "x >= 3", "x < 3", "x <= 3"], a: "x >= 3" },
+                { q: "Solve the modular inequality: |2x - 3| <= 5.", options: ["-1 <= x <= 4", "1 <= x <= 4", "-1 <= x <= 5", "0 <= x <= 4"], a: "-1 <= x <= 4" }
             ],
             tough: [
-                { q: "Solve the rational inequality: (x - 1) / (x + 2) <= 0.", a: "-2 < x <= 1" },
-                { q: "Find the range of x satisfying the inequality log_0.5(x - 1) > 1.", a: "1 < x < 1.5" }
+                { q: "Solve the rational inequality: (x - 1) / (x + 2) <= 0.", options: ["-2 <= x <= 1", "-2 < x <= 1", "-2 < x < 1", "x >= 1"], a: "-2 < x <= 1" },
+                { q: "Find the range of x satisfying the inequality log_0.5(x - 1) > 1.", options: ["x > 1.5", "1 < x < 1.5", "1 <= x <= 1.5", "x < 1.5"], a: "1 < x < 1.5" }
             ]
         }
     },
     physics: {
         mechanics: {
             easy: [
-                { q: "What is the formula for linear momentum (p) in terms of mass (m) and velocity (v)?", a: "p = mv" },
-                { q: "What is the work done when the force vector and displacement vector are orthogonal (90 degrees)?", a: "0" },
-                { q: "State the SI unit of power.", a: "Watt" },
-                { q: "What is the acceleration of a body moving with constant velocity?", a: "0" },
-                { q: "What is the dimensional formula for universal gravitational constant G?", a: "M⁻¹ L³ T⁻²" }
+                { q: "What is the formula for linear momentum (p) in terms of mass (m) and velocity (v)?", options: ["p = m/v", "p = mv", "p = mv²", "p = m²v"], a: "p = mv" },
+                { q: "What is the work done when the force vector and displacement vector are orthogonal (90 degrees)?", options: ["Maximum", "Minimum", "0", "Negative maximum"], a: "0" },
+                { q: "State the SI unit of power.", options: ["Joule", "Watt", "Newton", "Pascal"], a: "Watt" },
+                { q: "What is the acceleration of a body moving with constant velocity?", options: ["Constant", "Increasing", "0", "9.8 m/s²"], a: "0" },
+                { q: "What is the dimensional formula for universal gravitational constant G?", options: ["M¹ L³ T⁻²", "M⁻¹ L³ T⁻²", "M⁻¹ L² T⁻²", "M¹ L² T⁻¹"], a: "M⁻¹ L³ T⁻²" }
             ],
             medium: [
-                { q: "A projectile is thrown at 45 degrees with velocity v. Find its max horizontal range output expression.", a: "v²/g" },
-                { q: "Find the velocity of a particle if its position function is x = 3t² + 2t at time t = 2s.", a: "14" },
-                { q: "What is the minimum coefficient of friction required for a car to turn safely on a flat circular track of radius r at velocity v?", a: "v²/(rg)" },
-                { q: "Find the escape velocity from the surface of a planet of mass M and radius R.", a: "sqrt(2GM/R)" }
+                { q: "A projectile is thrown at 45 degrees with velocity v. Find its max horizontal range output expression.", options: ["v²/g", "v²/(2g)", "2v²/g", "v/g"], a: "v²/g" },
+                { q: "Find the velocity of a particle if its position function is x = 3t² + 2t at time t = 2s.", options: ["12", "14", "16", "8"], a: "14" },
+                { q: "What is the minimum coefficient of friction required for a car to turn safely on a flat circular track of radius r at velocity v?", options: ["rg/v²", "v²/(rg)", "v/(rg)", "v²r/g"], a: "v²/(rg)" },
+                { q: "Find the escape velocity from the surface of a planet of mass M and radius R.", options: ["sqrt(GM/R)", "sqrt(2GM/R)", "2GM/R", "GM/R²"], a: "sqrt(2GM/R)" }
             ],
             tough: [
-                { q: "A solid uniform sphere rolls without slipping down an inclined plane of inclination theta. Find its linear acceleration expression.", a: "(5/7)g sin(theta)" },
-                { q: "Calculate the terminal velocity ratio of two spherical drops of radii r and 2r falling through a viscous fluid.", a: "1/4" },
-                { q: "Find the moment of inertia of a uniform solid disc of mass M and radius R about a tangent perpendicular to its plane.", a: "(3/2)MR²" }
+                { q: "A solid uniform sphere rolls without slipping down an inclined plane of inclination theta. Find its linear acceleration expression.", options: ["(2/3)g sin(theta)", "(5/7)g sin(theta)", "(1/2)g sin(theta)", "g sin(theta)"], a: "(5/7)g sin(theta)" },
+                { q: "Calculate the terminal velocity ratio of two spherical drops of radii r and 2r falling through a viscous fluid.", options: ["1/2", "1/4", "1/8", "1"], a: "1/4" },
+                { q: "Find the moment of inertia of a uniform solid disc of mass M and radius R about a tangent perpendicular to its plane.", options: ["(1/2)MR²", "(3/2)MR²", "(5/4)MR²", "2MR²"], a: "(3/2)MR²" }
             ]
         },
         electrodynamics: {
             easy: [
-                { q: "What is the resistance of an ideal ammeter?", a: "0" },
-                { q: "What is the resistance of an ideal voltmeter?", a: "Infinity" },
-                { q: "State the SI unit of electric capacitance.", a: "Farad" },
-                { q: "What is the net electric field inside a perfectly charged spherical conductor?", a: "0" }
+                { q: "What is the resistance of an ideal ammeter?", options: ["0", "Infinity", "100 Ohm", "1 Ohm"], a: "0" },
+                { q: "What is the resistance of an ideal voltmeter?", options: ["0", "Infinity", "1000 Ohm", "1 Ohm"], a: "Infinity" },
+                { q: "State the SI unit of electric capacitance.", options: ["Ohm", "Farad", "Henry", "Tesla"], a: "Farad" },
+                { q: "What is the net electric field inside a perfectly charged spherical conductor?", options: ["Maximum", "0", "Sigma/Epsilon", "Infinite"], a: "0" }
             ],
             medium: [
-                { q: "Calculate the equivalent capacity of two equal capacitors (each of capacity C) connected in a series configuration.", a: "C/2" },
-                { q: "If the distance between the plates of a parallel plate capacitor is doubled, its capacitance becomes how many times?", a: "0.5" },
-                { q: "Find the magnetic force on a charge q moving parallel to a uniform magnetic field B with velocity v.", a: "0" },
-                { q: "Find the magnetic field at the center of a circular loop of radius r carrying current I.", a: "mu_0 * I / (2r)" }
+                { q: "Calculate the equivalent capacity of two equal capacitors (each of capacity C) connected in a series configuration.", options: ["2C", "C", "C/2", "C²"], a: "C/2" },
+                { q: "If the distance between the plates of a parallel plate capacitor is doubled, its capacitance becomes how many times?", options: ["2", "4", "0.5", "0.25"], a: "0.5" },
+                { q: "Find the magnetic force on a charge q moving parallel to a uniform magnetic field B with velocity v.", options: ["qvB", "0", "-qvB", "1"], a: "0" },
+                { q: "Find the magnetic field at the center of a circular loop of radius r carrying current I.", options: ["mu_0 * I / r", "mu_0 * I / (2r)", "mu_0 * I / (4r)", "2 * mu_0 * I / r"], a: "mu_0 * I / (2r)" }
             ],
             tough: [
-                { q: "An electron enters a region of uniform magnetic field B perpendicularly with velocity v. Find its frequency of revolution expression.", a: "eB/(2*pi*m)" },
-                { q: "Find the total self-inductance per unit length of a long coaxial cable core system with inner radius a and outer radius b.", a: "mu_0 * ln(b/a) / (2*pi)" },
-                { q: "What is the quality factor (Q-factor) of a series LCR resonant circuit?", a: "(1/R) * sqrt(L/C)" }
+                { q: "An electron enters a region of uniform magnetic field B perpendicularly with velocity v. Find its frequency of revolution expression.", options: ["eB/(m)", "eB/(2*pi*m)", "2*pi*m/(eB)", "eBv/m"], a: "eB/(2*pi*m)" },
+                { q: "Find the total self-inductance per unit length of a long coaxial cable core system with inner radius a and outer radius b.", options: ["mu_0 * ln(b/a) / (2*pi)", "mu_0 * (b-a) / (2*pi)", "mu_0 * ln(a/b)", "mu_0 / (2*pi)"], a: "mu_0 * ln(b/a) / (2*pi)" },
+                { q: "What is the quality factor (Q-factor) of a series LCR resonant circuit?", options: ["R * sqrt(L/C)", "(1/R) * sqrt(L/C)", "(1/R) * sqrt(C/L)", "sqrt(LC)/R"], a: "(1/R) * sqrt(L/C)" }
             ]
         },
         thermodynamics: {
             easy: [
-                { q: "Which thermodynamic process takes place at a constant volume?", a: "Isochoric" },
-                { q: "Which thermodynamic process takes place at a constant temperature?", a: "Isothermal" },
-                { q: "Write the mathematical expression for the First Law of Thermodynamics.", a: "dQ = dU + dW" },
-                { q: "What is the internal energy change of an ideal gas in a complete cyclic process?", a: "0" }
+                { q: "Which thermodynamic process takes place at a constant volume?", options: ["Isothermal", "Isobaric", "Isochoric", "Adiabatic"], a: "Isochoric" },
+                { q: "Which thermodynamic process takes place at a constant temperature?", options: ["Isothermal", "Isobaric", "Isochoric", "Adiabatic"], a: "Isothermal" },
+                { q: "Write the mathematical expression for the First Law of Thermodynamics.", options: ["dQ = dU + dW", "dQ = dU - dW", "dW = dQ + dU", "dU = dQ + dW"], a: "dQ = dU + dW" },
+                { q: "What is the internal energy change of an ideal gas in a complete cyclic process?", options: ["Maximum", "Positive", "0", "Negative"], a: "0" }
             ],
             medium: [
-                { q: "A Carnot engine operates between temperatures 300K and 600K. Calculate its efficiency percentage.", a: "50%" },
-                { q: "If an ideal gas expands isothermally from volume V to 2V, find the work done expression.", a: "nRT ln(2)" },
-                { q: "Find the degrees of freedom for a rigid diatomic gas molecule.", a: "5" }
+                { q: "A Carnot engine operates between temperatures 300K and 600K. Calculate its efficiency percentage.", options: ["25%", "33.3%", "50%", "75%"], a: "50%" },
+                { q: "If an ideal gas expands isothermally from volume V to 2V, find the work done expression.", options: ["nRT", "nRT ln(2)", "2nRT", "0"], a: "nRT ln(2)" },
+                { q: "Find the degrees of freedom for a rigid diatomic gas molecule.", options: ["3", "5", "6", "7"], a: "5" }
             ],
             tough: [
-                { q: "A Carnot engine absorbs 1000 J of heat from a source at 600K and rejects heat to a sink at 300K. Find the exact work done per cycle.", a: "500 J" },
-                { q: "During an adiabatic process, the pressure of a gas is found to be proportional to the cube of its absolute temperature. Find the value of Cp/Cv (gamma).", a: "1.5" }
+                { q: "A Carnot engine absorbs 1000 J of heat from a source at 600K and rejects heat to a sink at 300K. Find the exact work done per cycle.", options: ["250 J", "500 J", "750 J", "1000 J"], a: "500 J" },
+                { q: "During an adiabatic process, the pressure of a gas is found to be proportional to the cube of its absolute temperature. Find the value of Cp/Cv (gamma).", options: ["1.33", "1.4", "1.5", "1.66"], a: "1.5" }
             ]
         },
         modernPhysics: {
             easy: [
-                { q: "State the dimensional formula of Planck's constant (h).", a: "M L² T⁻¹" },
-                { q: "What is the charge of an alpha particle relative to a proton?", a: "+2" },
-                { q: "Name the phenomenon that directly demonstrates the particle nature of light.", a: "Photoelectric Effect" }
+                { q: "State the dimensional formula of Planck's constant (h).", options: ["M L² T⁻¹", "M L T⁻²", "M L² T⁻²", "M L¹ T⁻¹"], a: "M L² T⁻¹" },
+                { q: "What is the charge of an alpha particle relative to a proton?", options: ["+1", "+2", "+4", "-1"], a: "+2" },
+                { q: "Name the phenomenon that directly demonstrates the particle nature of light.", options: ["Interference", "Diffraction", "Photoelectric Effect", "Polarization"], a: "Photoelectric Effect" }
             ],
             medium: [
-                { q: "Calculate the energy of a photon corresponding to light of wavelength 4000 Angstroms (in eV).", a: "3.1 eV" },
-                { q: "If the half-life of a radioactive sample is 10 days, what fraction of the sample remains undecayed after 20 days?", a: "1/4" },
-                { q: "Find the momentum of a photon of frequency v.", a: "hv/c" }
+                { q: "Calculate the energy of a photon corresponding to light of wavelength 4000 Angstroms (in eV).", options: ["1.5 eV", "2.1 eV", "3.1 eV", "4.2 eV"], a: "3.1 eV" },
+                { q: "If the half-life of a radioactive sample is 10 days, what fraction of the sample remains undecayed after 20 days?", options: ["1/2", "1/4", "1/3", "1/8"], a: "1/4" },
+                { q: "Find the momentum of a photon of frequency v.", options: ["hv", "hv/c", "h/v", "hvc"], a: "hv/c" }
             ],
             tough: [
-                { q: "Find the ratio of the de Broglie wavelength of a proton and an alpha particle accelerated through the same potential difference.", a: "2" },
-                { q: "Find the radius expression of the nth Bohr orbit of a hydrogen atom in terms of principal quantum number n.", a: "0.529 * n²" }
+                { q: "Find the ratio of the de Broglie wavelength of a proton and an alpha particle accelerated through the same potential difference.", options: ["1", "sqrt(2)", "2", "4"], a: "2" },
+                { q: "Find the radius expression of the nth Bohr orbit of a hydrogen atom in terms of principal quantum number n.", options: ["0.529 * n", "0.529 * n²", "0.529 / n", "0.529 / n²"], a: "0.529 * n²" }
             ]
         }
     },
     chemistry: {
         organic: {
             easy: [
-                { q: "What is the hybridization state of carbon in a methane gas molecule?", a: "sp3" },
-                { q: "Name the primary functional group present in CH3CH2OH.", a: "Alcohol" },
-                { q: "What gas is released when calcium carbide reacts with water?", a: "Acetylene" },
-                { q: "What is the IUPAC name of the simplest ketone?", a: "Propanone" }
+                { q: "What is the hybridization state of carbon in a methane gas molecule?", options: ["sp", "sp2", "sp3", "sp3d"], a: "sp3" },
+                { q: "Name the primary functional group present in CH3CH2OH.", options: ["Ether", "Aldehyde", "Alcohol", "Ketone"], a: "Alcohol" },
+                { q: "What gas is released when calcium carbide reacts with water?", options: ["Methane", "Ethane", "Acetylene", "Ethylene"], a: "Acetylene" },
+                { q: "What is the IUPAC name of the simplest ketone?", options: ["Ethanal", "Propanone", "Butanone", "Propanal"], a: "Propanone" }
             ],
             medium: [
-                { q: "Identify the primary major organic product formed during a classic Williamson ether synthesis configuration.", a: "Ether" },
-                { q: "How many chiral carbons are present in a single molecule of 2-chlorobutane?", a: "1" },
-                { q: "What is the name of the reaction where an alkyl halide is treated with sodium metal in dry ether to form a symmetrical alkane?", a: "Wurtz Reaction" },
-                { q: "Which primary dynamic effect describes the permanent electron displacement along a carbon chain due to an electronegative atom?", a: "Inductive Effect" }
+                { q: "Identify the primary major organic product formed during a classic Williamson ether synthesis configuration.", options: ["Ester", "Ether", "Alcohol", "Alkane"], a: "Ether" },
+                { q: "How many chiral carbons are present in a single molecule of 2-chlorobutane?", options: ["0", "1", "2", "3"], a: "1" },
+                { q: "What is the name of the reaction where an alkyl halide is treated with sodium metal in dry ether to form a symmetrical alkane?", options: ["Fittig Reaction", "Wurtz Reaction", "Frankland Reaction", "Kolbe Reaction"], a: "Wurtz Reaction" },
+                { q: "Which primary dynamic effect describes the permanent electron displacement along a carbon chain due to an electronegative atom?", options: ["Resonance Effect", "Inductive Effect", "Electromeric Effect", "Hyperconjugation"], a: "Inductive Effect" }
             ],
             tough: [
-                { q: "Identify the major product when phenol reacts with CHCl3 in the presence of aqueous NaOH (Reimer-Tiemann reaction).", a: "Salicylaldehyde" },
-                { q: "Calculate the total number of cross-aldol condensation products possible between acetaldehyde and benzaldehyde.", a: "2" },
-                { q: "Identify the major product formed when anisole reacts with HI.", a: "Phenol + CH3I" }
+                { q: "Identify the major product when phenol reacts with CHCl3 in the presence of aqueous NaOH (Reimer-Tiemann reaction).", options: ["Salicylic acid", "Salicylaldehyde", "Benzoquinone", "Chlorophenol"], a: "Salicylaldehyde" },
+                { q: "Calculate the total number of cross-aldol condensation products possible between acetaldehyde and benzaldehyde.", options: ["2", "4", "1", "3"], a: "2" },
+                { q: "Identify the major product formed when anisole reacts with HI.", options: ["Iodobenzene + CH3OH", "Phenol + CH3I", "Benzene + CH3I", "Phenol + CH3OH"], a: "Phenol + CH3I" }
             ]
         },
         physical: {
             easy: [
-                { q: "State the oxidation number of oxygen in typical peroxide compounds.", a: "-1" },
-                { q: "What is the pH value of pure water at 25 degrees Celsius?", a: "7" },
-                { q: "State the SI unit of molar conductivity.", a: "S cm2 mol-1" }
+                { q: "State the oxidation number of oxygen in typical peroxide compounds.", options: ["-2", "-1", "0", "+2"], a: "-1" },
+                { q: "What is the pH value of pure water at 25 degrees Celsius?", options: ["0", "7", "14", "1"], a: "7" },
+                { q: "State the SI unit of molar conductivity.", options: ["S cm mol⁻¹", "S cm² mol⁻¹", "S⁻¹ cm² mol", "Ohm cm² mol⁻¹"], a: "S cm2 mol-1" }
             ],
             medium: [
-                { q: "Calculate the total pH value of a 10^-8 M HCl solution matrix at room temperature.", a: "6.98" },
-                { q: "What is the order of reaction if a graph of 1/[A] versus time yields a straight line with a positive slope?", a: "Second Order" },
-                { q: "How many Faradays of electricity are required to reduce 1 mole of Al3+ ions to Al metal?", a: "3" },
-                { q: "What is the coordination number of an atom in a Body-Centered Cubic (BCC) crystal lattice?", a: "8" }
+                { q: "Calculate the total pH value of a 10^-8 M HCl solution matrix at room temperature.", options: ["8.00", "7.00", "6.98", "6.00"], a: "6.98" },
+                { q: "What is the order of reaction if a graph of 1/[A] versus time yields a straight line with a positive slope?", options: ["Zero Order", "First Order", "Second Order", "Third Order"], a: "Second Order" },
+                { q: "How many Faradays of electricity are required to reduce 1 mole of Al3+ ions to Al metal?", options: ["1", "2", "3", "6"], a: "3" },
+                { q: "What is the coordination number of an atom in a Body-Centered Cubic (BCC) crystal lattice?", options: ["4", "6", "8", "12"], a: "8" }
             ],
             tough: [
-                { q: "Determine the crystal field stabilization energy (CFSE) configuration for a d6 high-spin octahedral complex field in terms of Delta_o.", a: "-0.4 Delta_o" },
-                { q: "For a gas-phase reaction where delta n is equal to -1, what is the value of Kp / Kc at a temperature of T Kelvin?", a: "1/(RT)" }
+                { q: "Determine the crystal field stabilization energy (CFSE) configuration for a d6 high-spin octahedral complex field in terms of Delta_o.", options: ["-2.4 Delta_o", "-0.4 Delta_o", "-1.2 Delta_o", "0 Delta_o"], a: "-0.4 Delta_o" },
+                { q: "For a gas-phase reaction where delta n is equal to -1, what is the value of Kp / Kc at a temperature of T Kelvin?", options: ["RT", "1/(RT)", "(RT)⁻²", "1"], a: "1/(RT)" }
             ]
         },
         inorganic: {
             easy: [
-                { q: "Which group 18 element is the most abundant in the Earth's atmosphere?", a: "Argon" },
-                { q: "What is the shape of an SF6 molecule according to VSEPR theory?", a: "Octahedral" },
-                { q: "Name the process used for the commercial manufacture of ammonia gas.", a: "Haber Process" }
+                { q: "Which group 18 element is the most abundant in the Earth's atmosphere?", options: ["Helium", "Neon", "Argon", "Radon"], a: "Argon" },
+                { q: "What is the shape of an SF6 molecule according to VSEPR theory?", options: ["Linear", "Tetrahedral", "Octahedral", "Square Planar"], a: "Octahedral" },
+                { q: "Name the process used for the commercial manufacture of ammonia gas.", options: ["Ostwald Process", "Haber Process", "Contact Process", "Solvay Process"], a: "Haber Process" }
             ],
             medium: [
-                { q: "Name the type of structural isomerism shown by [Co(NH3)5(NO2)]Cl2 and [Co(NH3)5(ONO)]Cl2.", a: "Linkage Isomerism" },
-                { q: "What is the geometric shape of a XeF4 molecule according to VSEPR theory?", a: "Square Planar" },
-                { q: "Which d-block element has the highest melting point?", a: "Tungsten" },
-                { q: "What is the hybridization of the central atom in an IF7 molecule?", a: "sp3d3" }
+                { q: "Name the type of structural isomerism shown by [Co(NH3)5(NO2)]Cl2 and [Co(NH3)5(ONO)]Cl2.", options: ["Coordination Isomerism", "Linkage Isomerism", "Ionization Isomerism", "Geometrical Isomerism"], a: "Linkage Isomerism" },
+                { q: "What is the geometric shape of a XeF4 molecule according to VSEPR theory?", options: ["Tetrahedral", "Square Planar", "Octahedral", "See-saw"], a: "Square Planar" },
+                { q: "Which d-block element has the highest melting point?", options: ["Iron", "Chromium", "Tungsten", "Manganese"], a: "Tungsten" },
+                { q: "What is the hybridization of the central atom in an IF7 molecule?", options: ["sp3d", "sp3d2", "sp3d3", "d2sp3"], a: "sp3d3" }
             ],
             tough: [
-                { q: "Calculate the spin-only magnetic moment of an isolated Mn2+ transition metal ion (in Bohr Magnetons).", a: "5.92 BM" },
-                { q: "Write the chemical formula of the brown ring complex compound formed during the nitrate test identification loop.", a: "[Fe(H2O)5(NO)]SO4" }
+                { q: "Calculate the spin-only magnetic moment of an isolated Mn2+ transition metal ion (in Bohr Magnetons).", options: ["1.73 BM", "3.87 BM", "4.90 BM", "5.92 BM"], a: "5.92 BM" },
+                { q: "Write the chemical formula of the brown ring complex compound formed during the nitrate test identification loop.", options: ["[Fe(H2O)5(NO)]SO4", "[Fe(H2O)4(NO)2]SO4", "[Fe(H2O)5(NO2)]SO4", "[Fe(H2O)6]SO4"], a: "[Fe(H2O)5(NO)]SO4" }
             ]
         },
         general: {
             easy: [
-                { q: "What is the maximum number of electrons that can be accommodated in a p-subshell?", a: "6" },
-                { q: "Which element possesses the highest electronegativity value on the Pauling scale?", a: "Fluorine" },
-                { q: "State the empirical formula of hydrogen peroxide (H2O2).", a: "HO" }
+                { q: "What is the maximum number of electrons that can be accommodated in a p-subshell?", options: ["2", "6", "10", "14"], a: "6" },
+                { q: "Which element possesses the highest electronegativity value on the Pauling scale?", options: ["Oxygen", "Fluorine", "Chlorine", "Helium"], a: "Fluorine" },
+                { q: "State the empirical formula of hydrogen peroxide (H2O2).", options: ["H2O", "HO", "HO2", "H2O2"], a: "HO" }
             ],
             medium: [
-                { q: "Which gas deviates most from ideal behavior at low temperatures and high pressures: H2, He, or NH3?", a: "NH3" },
-                { q: "What is the total number of subshells associated with the principal quantum number n = 3?", a: "3" }
+                { q: "Which gas deviates most from ideal behavior at low temperatures and high pressures: H2, He, or NH3?", options: ["H2", "He", "NH3", "All deviate equally"], a: "NH3" },
+                { q: "What is the total number of subshells associated with the principal quantum number n = 3?", options: ["1", "2", "3", "4"], a: "3" }
             ],
             tough: [
-                { q: "Arrange the halogens (F, Cl, Br, I) in order of increasing electron gain enthalpy negative magnitude values.", a: "I < Br < F < Cl" },
-                { q: "According to molecular orbital theory, what is the exact bond order of an oxygen molecule ion (O2+)?", a: "2.5" }
+                { q: "Arrange the halogens (F, Cl, Br, I) in order of increasing electron gain enthalpy negative magnitude values.", options: ["F < Cl < Br < I", "I < Br < F < Cl", "I < Br < Cl < F", "Cl < F < Br < I"], a: "I < Br < F < Cl" },
+                { q: "According to molecular orbital theory, what is the exact bond order of an oxygen molecule ion (O2+)?", options: ["2", "2.5", "1.5", "3"], a: "2.5" }
             ]
         }
     }
 };
 
 // =====================================================================
-// 🎲 RANDOMIZER ENGINE
+// 🎲 RANDOMIZER ENGINE (Kept completely functional)
 // =====================================================================
 function getRandomQuizQuestions(subject, topic, difficulty, count = 3) {
     try {
@@ -376,6 +376,9 @@ window.onload = function() {
     }
 };
 
+// =====================================================================
+// 🚀 UPDATED GENERATOR: RENDERS MULTIPLE-CHOICE OPTIONS
+// =====================================================================
 function generateCustomQuizSession() {
     const chapterSelect = document.getElementById("chapter-select");
     const difficultySelect = document.getElementById("difficulty-select");
@@ -403,62 +406,86 @@ function generateCustomQuizSession() {
         return;
     }
 
+    // Clear output area
     outputContainer.innerHTML = "";
+
+    // Generate dynamic MCQ HTML template structure loops
     currentSessionQuestions.forEach((item, index) => {
-        let questionCard = document.createElement("div");
-        questionCard.className = "question-card";
-        questionCard.innerHTML = `
-            <p style="font-weight: bold; margin-bottom: 8px; color: #f1f2f6;">Q${index + 1}: ${item.q}</p>
-            <input type="text" id="ans-input-${index}" class="quiz-text-input" placeholder="Type your answer here...">
-            <div id="feedback-${index}" style="margin-top: 10px; font-size: 13px; font-weight: bold; display: none;"></div>
-        `;
-        outputContainer.appendChild(questionCard);
+        const questionBlock = document.createElement("div");
+        questionBlock.className = "quiz-question-wrapper";
+        questionBlock.style.marginBottom = "25px";
+        questionBlock.style.background = "rgba(255, 255, 255, 0.05)";
+        questionBlock.style.padding = "15px";
+        questionBlock.style.borderRadius = "8px";
+
+        // Build Title Question Layout
+        let htmlContent = `<p style="font-weight: 600; margin-bottom: 12px; color: #fff;">Q${index + 1}: ${item.q}</p>`;
+        
+        // Build the Radio Inputs List
+        htmlContent += `<div class="options-group-container" style="display: flex; flex-direction: column; gap: 8px;">`;
+        item.options.forEach((opt) => {
+            htmlContent += `
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 6px; border-radius: 4px; color: #ced6e0;">
+                    <input type="radio" name="mcq-group-${index}" value="${opt}" id="ans-input-${index}-${opt.replace(/\s+/g, '')}" style="accent-color: #1e90ff;">
+                    ${opt}
+                </label>
+            `;
+        });
+        htmlContent += `</div>`;
+        
+        // Setup individual validation target row placeholders
+        htmlContent += `<div id="feedback-${index}" class="feedback-node" style="margin-top: 10px; font-weight: bold; display: none;"></div>`;
+        
+        questionBlock.innerHTML = htmlContent;
+        outputContainer.appendChild(questionBlock);
     });
 
-    if (setupPanel) setupPanel.style.display = "none";
-    if (quizTerminal) quizTerminal.style.display = "block";
-
-    let minutesSelected = parseInt(timeSelect.value, 10) || 10;
-    secondsLeft = minutesSelected * 60;
+    // Start Timer Systems
+    const minutesAllocated = parseInt(timeSelect.value, 10) || 5;
+    secondsLeft = minutesAllocated * 60;
     
     if (activeTimer) clearInterval(activeTimer);
     
-    startQuizClockTimer();
-    activeTimer = setInterval(startQuizClockTimer, 1000);
+    activeTimer = setInterval(() => {
+        secondsLeft--;
+        if (secondsLeft <= 0) {
+            clearInterval(activeTimer);
+            document.getElementById("quiz-clock").innerText = "Time Remaining: 00:00";
+            submitQuizSession();
+        } else {
+            let mins = Math.floor(secondsLeft / 60);
+            let secs = secondsLeft % 60;
+            document.getElementById("quiz-clock").innerText = `Time Remaining: ${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+    }, 1000);
+
+    // Swap Viewports panels
+    setupPanel.style.display = "none";
+    quizTerminal.style.display = "block";
 }
 
-function startQuizClockTimer() {
-    const clockNode = document.getElementById("quiz-clock");
-    if (!clockNode) return;
-
-    if (secondsLeft <= 0) {
-        clearInterval(activeTimer);
-        clockNode.innerText = "Time Expired!";
-        alert("⏱️ Time is up! Automatically finalizing your quiz sheet.");
-        submitQuizSession();
-        return;
-    }
-
-    let mins = Math.floor(secondsLeft / 60);
-    let secs = secondsLeft % 60;
-    clockNode.innerText = `Time Remaining: ${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    secondsLeft--;
-}
-
-// 🌟 FIXED: ADDED THE EVALUATION METHOD FOR SUBMITTING ANSWERS & GLOBAL CLOUD SYNC
+// =====================================================================
+// 🎯 UPDATED EVALUATION ENGINE: CAPTURES SELECTED MCQs
+// =====================================================================
 function submitQuizSession() {
     clearInterval(activeTimer);
     let score = 0;
 
     currentSessionQuestions.forEach((item, index) => {
-        const userInput = document.getElementById(`ans-input-${index}`);
         const feedback = document.getElementById(`feedback-${index}`);
+        
+        // Find the checked option inside our custom named radio group
+        const selectedRadio = document.querySelector(`input[name="mcq-group-${index}"]:checked`);
+        
+        // Disable all radio buttons inside this question block group to freeze changes
+        const radiosInGroup = document.querySelectorAll(`input[name="mcq-group-${index}"]`);
+        radiosInGroup.forEach(radio => radio.disabled = true);
 
-        if (userInput && feedback) {
-            userInput.disabled = true;
+        if (feedback) {
             feedback.style.display = "block";
-
-            let cleanUserAns = userInput.value.trim().toLowerCase();
+            
+            // Extract selected text if exist, otherwise treat empty
+            let cleanUserAns = selectedRadio ? selectedRadio.value.trim().toLowerCase() : "";
             let cleanCorrectAns = item.a.trim().toLowerCase();
 
             if (cleanUserAns === cleanCorrectAns) {
@@ -472,11 +499,10 @@ function submitQuizSession() {
         }
     });
 
-    // 🔥 THE FIX: Wire up the calculated points back into your Global Leaderboard state!
+    // Wire up the calculated points back into your Global Leaderboard state
     if (score > 0 && typeof window.addXpReward === "function") {
         window.addXpReward(score);
     } else if (score > 0) {
-        // Fallback: If quiz page is running isolated, update storage directly
         let currentLocalXP = parseInt(localStorage.getItem("totalUserXP") || "0", 10);
         localStorage.setItem("totalUserXP", currentLocalXP + score);
     }
