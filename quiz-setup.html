@@ -445,7 +445,7 @@ function startQuizClockTimer() {
     secondsLeft--;
 }
 
-// 🌟 FIXED: ADDED THE EVALUATION METHOD FOR SUBMITTING ANSWERS
+// 🌟 FIXED: ADDED THE EVALUATION METHOD FOR SUBMITTING ANSWERS & GLOBAL CLOUD SYNC
 function submitQuizSession() {
     clearInterval(activeTimer);
     let score = 0;
@@ -471,6 +471,15 @@ function submitQuizSession() {
             }
         }
     });
+
+    // 🔥 THE FIX: Wire up the calculated points back into your Global Leaderboard state!
+    if (score > 0 && typeof window.addXpReward === "function") {
+        window.addXpReward(score);
+    } else if (score > 0) {
+        // Fallback: If quiz page is running isolated, update storage directly
+        let currentLocalXP = parseInt(localStorage.getItem("totalUserXP") || "0", 10);
+        localStorage.setItem("totalUserXP", currentLocalXP + score);
+    }
 
     const actionZone = document.getElementById("quiz-action-zone");
     if (actionZone) {
