@@ -476,9 +476,14 @@ function submitQuizSession() {
     if (actionZone) {
         actionZone.innerHTML = `
             <p style="font-weight: bold; color: #00d2d3;">Session Complete! Total Points Gained: +${score} XP</p>
-            <button class="btn-launch" style="background: #ff4757; margin-top: 10px;" onclick="window.location.reload()">
-                Take Another Quiz 🔄
-            </button>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <button class="btn-launch" style="background: #ff4757; flex: 1;" onclick="window.location.reload()">
+                    Take Another Quiz 🔄
+                </button>
+                <button class="btn-launch" style="background: linear-gradient(135deg, #1e90ff, #4d00ff); flex: 1;" onclick="window.location.href='index.html'">
+                    Return to Study Deck 📑
+                </button>
+            </div>
         `;
     }
 }
