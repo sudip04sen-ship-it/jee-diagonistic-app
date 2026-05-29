@@ -716,12 +716,12 @@ if (displayXpNode) displayXpNode.innerText = currentXPValue;
 
 // 🔥 SAFETY NET: If they have any XP locally, make sure it's saved in the cloud!
 // Because of our backend 'merge-duplicates' fix, this will NOT create duplicates.
-if (currentXPValue > 0) {
+
     console.log("Syncing user baseline profile state to cloud matrix...");
     syncUserScoreToCloud(currentUserNameString, currentXPValue);
-} else {
+ 
     renderNationalLeaderboard();
-}
+
 
 // 🔄 LIVE BACKGROUND REFRESH: Fetch ranks fluidly every 10 seconds
 setInterval(renderNationalLeaderboard, 10000);
